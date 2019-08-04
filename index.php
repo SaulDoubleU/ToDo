@@ -14,17 +14,6 @@
 </head>
 <body>
   
-  <div id="todo">
-  <?php include_once("nav.inc.php"); ?>
-  
-  <div class="collection">
-    <?php foreach($collection as $c): ?>
-    <a href="details.php?id=<?php echo $c['id']; ?>" class="collection__item" style="background-image: url(<?php echo $c['poster']; ?>)">
-    </a>
-    <?php endforeach; ?>
-  </div>
-  
-</div>
 
 </body>
 </html>
