@@ -3,8 +3,8 @@
         this function checks if a user can login
         and return TRUE or FALSE 
     */
-    function canILogin( $username, $password ){
-        $conn = new mysqli("localhost", "root", "root", "todoapp");
+    function canILogin($username, $password){
+        $conn = new mysqli("localhost", "root", "root", "netflix");
         
         $query = "select * from users where email = '".$conn->real_escape_string($username)."'";
         $result = $conn->query($query);

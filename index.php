@@ -12,7 +12,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>IMDFlix</title>
+  <title>TodoApp</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>

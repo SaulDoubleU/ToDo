@@ -11,7 +11,7 @@
 body
 {
   background-color: #dedede;
-  color: #222;
+  color: white;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   margin: 0;
 
@@ -28,7 +28,7 @@ body
 
 .navbar a
 {
-  color: #222;
+  color: white;
   font-size: 0.8em;
   text-decoration: none;
   display: inline-block;
@@ -43,7 +43,7 @@ a.navbar__logout
 
 .navbar .logo
 {
-  color: #0abdd1;
+  color: #00abd1;
   font-weight: bold;
 }
 
@@ -59,7 +59,7 @@ a.navbar__logout
   width: 100%;
   max-width: 200px;
   background-color: #dedede;
-  color: #222;
+  color: white;
   padding: 0.5em;
   border: 1px solid white;
 }
@@ -92,28 +92,27 @@ a.navbar__logout
   background-repeat: no-repeat;
   background-size: cover;
   background-position: -40%;
-  
 }
 
-#loginlogo {
-    text-align: center;
-    text-decoration: underline;
+.form__hint
+{
+  display: block;
+  color: tomato;
 }
 
 .form--login
 {
   background-color: #F3F3F3;
   padding: 1em;
-  color: #222;
+  color: #505050;
   grid-column: form;
   grid-row: form;
-  border-radius: 10%;
 }
 
 .form__error
 {
-  background-color: #222;
-  color: #222;
+  background-color: #F3F3F3;
+  color: #fa0400;
   font-weight: lighter;
   padding: 0.3em 1em;
   margin-bottom: 1em;
@@ -129,13 +128,11 @@ a.navbar__logout
 {
   display: block;
   margin-bottom: 0.2em;
-  
 }
 
 .form__field .label__inline
 {
   display: inline-block;
-  
 }
 
 .form__field input[type=text], 
@@ -154,12 +151,25 @@ a.navbar__logout
 
 .btn--primary
 {
-  background-color: #0abdd1;
-  color: #222;
+  background-color: #00abd1;
+  color: white;
   text-align: center;
+  border: none;
   padding: 0.3em 2em;
   font-size: 1.4em;
-  border: none;
+}
+
+.registerbtn
+{
+  text-align: center;
+  text-decoration: none;
+}
+
+.registerbtn a
+{
+  text-decoration: none;
+  color: #505050;
+  font-weight: bold;
 }
 
 .collectionDetails
@@ -175,10 +185,10 @@ a.navbar__logout
   font-size: 3em;
   font-weight: lighter;
   
-  border-bottom: 3px solid #0abdd1;
+  border-bottom: 3px solid #00abd1;
 }
 
 .collectionDetails__desc
 {
-  color: #222;
+  color: #999999;
 }

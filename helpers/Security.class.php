@@ -18,7 +18,7 @@
         }
 
         private function passwordIsStrongEnough(){
-            if( strlen( $this->password ) <= 8 ){
+            if( strlen( $this->password ) <= 7 ){
                 return false;
             }
             else {

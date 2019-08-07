@@ -1,5 +1,6 @@
 <?php
 	include_once("functions.inc.php");
+	include_once("classes/User.class.php");
 	
 	// get user and password from POST
 	if( !empty($_POST) ) {
@@ -26,7 +27,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>IMDFlix</title>
+  <title>TodoApp</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -38,22 +39,10 @@
 				<?php if( isset($error) ): ?>
 				<div class="form__error">
 					<p>
-						Sorry, we can't log you in with that email address and password. Can you try again?
+					Unknown email or password.
 					</p>
 				</div>
 				<?php endif; ?>
-
-				<div class="email__success" style="display: none">
-					<p>
-						That email adress is still available.
-					</p>
-				</div>
-
-				<div class="email__error" style="display: none">
-					<p>
-						Sorry, that email adress is already in use.
-					</p>
-				</div>
 
 				<div class="form__field">
 					<label for="email">Email</label>
@@ -68,6 +57,11 @@
 					<input type="submit" value="Sign in" class="btn btn--primary">	
 					<input type="checkbox" id="rememberMe"><label for="rememberMe" class="label__inline">Remember me</label>
 				</div>
+
+				<div class="registerbtn">
+					<p>No account yet?<a href="register.php"> Sign up here</a></p>
+				</div>
+
 			</form>
 		</div>
 	</div>

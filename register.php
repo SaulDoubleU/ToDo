@@ -18,7 +18,7 @@
 				}
 			}
 			else {
-				$error = "Your passwords are not secure or do not match.";
+				$error = "* Your password needs to be at least 8 characters long";
 			}
         }
         catch(Exception $e) {
@@ -30,7 +30,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>IMDFlix</title>
+  <title>TodoApp</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -42,7 +42,7 @@
                 <?php if(isset($error)): ?>
 				<div class="form__error">
 					<p>
-						💩 <?php echo $error; ?>
+						<?php echo $error; ?>
 					</p>
 				</div>
                 <?php endif; ?>
@@ -69,6 +69,5 @@
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="js/imdflix.js"></script>
 </body>
 </html>
