@@ -1,9 +1,12 @@
-<?php 
+<?php
+  session_start();
+  include_once("classes/Item.class.php");
+  include_once("classes/User.class.php");
 
-  $conn = new PDO("mysql:host=localhost;dbname=todoapp","root","root", null); //root nooit online zetten
-  $statement = $conn->prepare("select * from collection");
-  $statement->execute();
-  $collection = $statement->fetchAll();
+  User::checkLogin();
+
+  $collection = Item::getAll();
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -14,6 +17,17 @@
 </head>
 <body>
   
+  <div id="todoapp">
+  <?php include_once("nav.inc.php"); ?>
+  
+  <div class="collection">
+    <?php foreach($collection as $c): ?>
+    <a href="details.php?watch=<?php echo $c['id']; ?>" class="collection__item" style="background-image: url(<?php echo $c['poster']; ?>)">
+    </a>
+    <?php endforeach; ?>
+  </div>
+  
+</div>
 
 </body>
 </html>

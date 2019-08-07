@@ -1,17 +1,31 @@
 <?php
-	require_once("classes/User.class.php");
+    include_once("classes/User.class.php");
+    include_once("helpers/Security.class.php");
+    
+    if( !empty($_POST) ){
+        try
+        {
+            $security = new Security();
+            $security->password = $_POST['password'];
+            $security->passwordConfirmation = $_POST['password_confirmation'];
 
-	if(!empty($_POST)){
+            if( $security->passwordsAreSecure() ){
+                $user = new User();        
+                $user->setEmail( $_POST['email'] );
+				$user->setPassword( $_POST['password'] );
+				if( $user->register() ) {
+					$user->login();
+				}
+			}
+			else {
+				$error = "Your passwords are not secure or do not match.";
+			}
+        }
+        catch(Exception $e) {
+			$error = $e->getMessage();
+        }
 
-		$user = new User();
-		$user->setEmail($_POST['email']);
-		$user->setPassword($_POST['password']);
-		$user->setPasswordConfirmation($_POST['password_confirmation']);
-		$result = $user->register();
-		var_dump($result);
-		
-	}
-
+    }
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,15 +39,17 @@
 			<form action="" method="post">
 				<h2 form__title>Sign up for an account</h2>
 
-				<div class="form__error hidden">
+                <?php if(isset($error)): ?>
+				<div class="form__error">
 					<p>
-						Some error here
+						💩 <?php echo $error; ?>
 					</p>
 				</div>
+                <?php endif; ?>
 
 				<div class="form__field">
-					<label for="email">Email</label>
-					<input type="text" id="email" name="email">
+					<label for="email">Email<span class="form__hint"></span></label>
+					<input value="" type="text" id="email" name="email">
 				</div>
 				<div class="form__field">
 					<label for="password">Password</label>
@@ -51,5 +67,8 @@
 			</form>
 		</div>
 	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="js/imdflix.js"></script>
 </body>
 </html>

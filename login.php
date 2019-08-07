@@ -1,46 +1,41 @@
 <?php
-
-	if ( !empty($_POST) ) {
-		//email en password opvragen 
-		$email = $_POST['email'];
+	include_once("functions.inc.php");
+	
+	// get user and password from POST
+	if( !empty($_POST) ) {
+		$username = $_POST['email'];
 		$password = $_POST['password'];
 
-		//hash opvragen, op basis van email 
-		$conn = new PDO("mysql:host=localhost;dbname=todoapp","root","root", null);
-
-		//check of rehash van password gelijk is aan hash uit db
-		$statement = $conn->prepare ("SELECT * FROM users where email = :email");//prepare = veilig statement klaarzetten
-		$statement->bindParam(":email", $email);
-		$result = $statement->execute();
-
-		$user = $statement->fetch(PDO::FETCH_ASSOC); //wij benoemen associatief, array met kolomnamen en niet met nummers
-
-		//ja -> login
-		if( password_verify($password, $user['password']) ) {//$user is heel de array en er is enkel de hash nodig die zit in de kolom password
-			echo "password klopt";
+		// check if user can login (use function)
+		if( canILogin($username, $password) ) {
 			session_start();
-			$_SESSION['userid'] = $user['id'];
+			$_SESSION['username'] = $username;
+
+			// if ok -> redirect to index.php
 			header('Location: index.php');
-		//nee -> error
-		} else {
-			echo "neeen!";
 		}
+		else {
+			$error = "Login failed";
+		}
+
+		
+
 	}
 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TODO App</title>
+  <title>IMDFlix</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div class="phpLogin">
+	<div class="todoLogin">
 		<div class="form form--login">
 			<form action="" method="post">
 				<h2 form__title>Sign In</h2>
 
-				<?php if (isset($error)): ?>
+				<?php if( isset($error) ): ?>
 				<div class="form__error">
 					<p>
 						Sorry, we can't log you in with that email address and password. Can you try again?
@@ -48,25 +43,55 @@
 				</div>
 				<?php endif; ?>
 
+				<div class="email__success" style="display: none">
+					<p>
+						That email adress is still available.
+					</p>
+				</div>
+
+				<div class="email__error" style="display: none">
+					<p>
+						Sorry, that email adress is already in use.
+					</p>
+				</div>
+
 				<div class="form__field">
-					<label for="Email">Email</label>
-					<input type="text" name="email">
+					<label for="email">Email</label>
+					<input type="text" id="email" name="email">
 				</div>
 				<div class="form__field">
-					<label for="Password">Password</label>
-					<input type="password" name="password">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password">
 				</div>
 
 				<div class="form__field">
 					<input type="submit" value="Sign in" class="btn btn--primary">	
 					<input type="checkbox" id="rememberMe"><label for="rememberMe" class="label__inline">Remember me</label>
 				</div>
-
-				<div>
-					<p>No account yet?<a href="register.php">Sign up here</a></p>
-				</div>
 			</form>
 		</div>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script>
+		$("#email").on("keyup", function(e) {
+
+			var email = $("#email").val();
+
+			$.ajax({
+				method: "POST",
+  				url: "ajax/accountAvailable.php",
+				data: { email: email },
+  				dataType: "JSON"
+			}).done(function(res) {
+  				if ( res.status == "error" ) {
+					$(".email__error").css("display", "block");
+					$(".email__success").css("display", "none");
+				} else if ( res.status == "success" ) {
+					$(".email__error").css("display", "none");
+					$(".email__success").css("display", "block");
+				}
+			});
+		});
+	</script>
 </body>
 </html>
