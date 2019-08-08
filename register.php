@@ -1,73 +1,88 @@
-<?php
-    include_once("classes/User.class.php");
-    include_once("helpers/Security.class.php");
-    
+<?php 
+
+    require_once("bootstrap/bootstrap.php");
+
     if( !empty($_POST) ){
-        try
-        {
-            $security = new Security();
-            $security->password = $_POST['password'];
-            $security->passwordConfirmation = $_POST['password_confirmation'];
+        
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $passwordConfirm = $_POST['passwordConfirm'];
+        
 
-            if( $security->passwordsAreSecure() ){
-                $user = new User();        
-                $user->setEmail( $_POST['email'] );
-				$user->setPassword( $_POST['password'] );
-				if( $user->register() ) {
-					$user->login();
-				}
-			}
-			else {
-				$error = "* Your password needs to be at least 8 characters long";
-			}
-        }
-        catch(Exception $e) {
-			$error = $e->getMessage();
-        }
+        try{
+            $user = new User();
+            $user->setEmail($email);
+            $user->setPassword($password);
+            $user->setPasswordConfirmation($passwordConfirm);
 
-    }
+            if($user->register()) {
+                $user->doLogin($email);
+            }
+
+        }
+        
+        catch( Exception $e){
+            $error = $e->getMessage();
+        }
+}
+
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TodoApp</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div class="todoLogin todoLogin--register">
-		<div class="form form--login">
-			<form action="" method="post">
-				<h2 form__title>Sign up for an account</h2>
+<div class="loginContainer">
+    <div class="left">
+        <form action="" method="post">
+            <h2 class="formTitle">Signup</h2>
 
-                <?php if(isset($error)): ?>
-				<div class="form__error">
-					<p>
-						<?php echo $error; ?>
-					</p>
-				</div>
-                <?php endif; ?>
+            <?php if (isset($error)): ?>
+            <div class="formError">
+                <p>
+                    <?php echo $error ?>
+                </p>
+            </div>
+            <?php endif; ?>
 
-				<div class="form__field">
-					<label for="email">Email<span class="form__hint"></span></label>
-					<input value="" type="text" id="email" name="email">
-				</div>
-				<div class="form__field">
-					<label for="password">Password</label>
-					<input type="password" id="password" name="password">
-				</div>
+            <div class="formInput">
+                <div class="formField">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" placeholder="email">
+                </div>
 
-                <div class="form__field">
-					<label for="password_confirmation">Confirm your password</label>
-					<input type="password" id="password_confirmation" name="password_confirmation">
-				</div>
+                <div class="formField">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="password">
+                </div>
 
-				<div class="form__field">
-					<input type="submit" value="Sign me up!" class="btn btn--primary">	
-				</div>
-			</form>
-		</div>
-	</div>
+                <div class="formField">
+                    <label for="passwordConfirm">Confirm Password</label>
+                    <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="password">
+                </div>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+                <input type="submit" value="Sign up" class="btn">
+
+            </div>
+
+            <div class="redirectLink">
+                <p>Already got an account? <a href="login.php"> Go back to login </a></p>
+            </div>
+        </form>
+
+        </div>
+
+        <div class="right">
+
+        
+        </div>
+    </div>    
 </body>
 </html>

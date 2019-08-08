@@ -3,8 +3,8 @@
     $db = [
         "host"      => 'localhost',
         "dbname"    => 'todoapp',
-        "username"  => "aefdfefzxfap",
-        "password"  => "hhkfbvsdk",
+        "username"  => "sqkdjfklsdmf",
+        "password"  => "qsdfsdfds",
         "port"      => ""
     ];
 

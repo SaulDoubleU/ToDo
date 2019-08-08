@@ -1,6 +1,6 @@
 <?php
   session_start();
-  include_once("classes/Item.class.php");
+  //include_once("classes/Item.class.php");
   include_once("classes/User.class.php");
 
   User::checkLogin();
