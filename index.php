@@ -1,33 +1,12 @@
-<?php
-  session_start();
-  //include_once("classes/Item.class.php");
-  include_once("classes/User.class.php");
-
-  User::checkLogin();
-
-  $collection = Item::getAll();
-
-
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TodoApp</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TodoApp</title>
 </head>
 <body>
-  
-  <div id="todoapp">
-  <?php include_once("nav.inc.php"); ?>
-  
-  <div class="collection">
-    <?php foreach($collection as $c): ?>
-    <a href="details.php?watch=<?php echo $c['id']; ?>" class="collection__item" style="background-image: url(<?php echo $c['poster']; ?>)">
-    </a>
-    <?php endforeach; ?>
-  </div>
-  
-</div>
-
+    <a href="logout.php">Logout</a>
 </body>
 </html>

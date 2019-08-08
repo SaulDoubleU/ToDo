@@ -1,28 +1,15 @@
 <?php
 
-    class Db {
+    abstract class Db{
         private static $conn;
-
-        /*
-            @return PDO connection
-            -> if exists -> return existing
-            -> if !exists -> return new PDO 
-        */
-        public static function getInstance() {
-            
-            include_once("./settings/db.php");
-
-
-            if( self::$conn == null ){
-                self::$conn = new PDO('mysql:host='.$db['host'].';dbname=todoapp', $db['username'], $db['password']);
-                // echo "no";
+        
+        public static function getConnection(){
+            if( self::$conn != null ){
                 return self::$conn;
-                
-            }
-            else {
-                // echo "yes";
+            }else{
+                $config = parse_ini_file($_SERVER['DOCUMENT_ROOT']. "/todoapp/config/config.ini");
+                self::$conn = new PDO("mysql:host=" . $config['host'] . ";dbname=" . $config['db_name'], $config['db_user'], $config['db_password']);
                 return self::$conn;
             }
         }
-
     }
