@@ -4,6 +4,47 @@
     class Mylist { 
         
         private $list;
+        private $listInfo;
+        private $listId;
+
+
+         /**
+         * Get the value of listId
+         */ 
+        public function getListId()
+        {
+                return $this->listId;
+        }
+
+        /**
+         * Set the value of listId
+         *
+         * @return  self
+         */ 
+        public function setListId($listId)
+        {
+                $this->listId = $listId;
+
+                return $this;
+        }
+        /**
+         * Get the value of listInfo
+         */ 
+        public function getListInfo()
+        {
+                return $this->listInfo;
+        }
+        /**
+         * Set the value of listInfo
+         *
+         * @return  self
+         */ 
+        public function setListInfo($listInfo)
+        {
+                $this->listInfo = $listInfo;
+                return $this;
+        }
+
         /**
          * Get the value of list
          */ 
@@ -37,5 +78,22 @@
                 return false;
             }
         }
+
+        public static function getListInformation() {
+
+            try {
+                $conn = Db::getConnection();
+                $statement = $conn->prepare("select * from list");
+                $statement->execute();
+                $result = $statement->fetchAll();
+
+                return $result;
+            } 
+            
+            catch (Throwable $t ) {
+                echo $t;
+            }
+        }
+        
         
     }

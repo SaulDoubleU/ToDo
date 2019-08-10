@@ -93,4 +93,16 @@
             $_SESSION['email'] = $email;
             header("Location: index.php");   
         }
+
+        
+        public static function getUserById($id){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('select * from user where id = :id');
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+            $result = $statement->fetch();
+            return $result;
+    }
+
+
     }
