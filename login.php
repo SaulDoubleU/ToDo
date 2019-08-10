@@ -31,7 +31,7 @@
         <?php if (isset($error)): ?>
         <div class="formError">
             <p>
-                <?php echo $error ?>
+                * Wrong email or password
             </p>
         </div>
         <?php endif; ?>
