@@ -1,10 +1,31 @@
 <?php 
-    require_once("Db.php");
+    require_once("Db.class.php");
     
     class Task { 
         
         private $task;
         private $taskInfo;
+        private $listId;
+
+        /**
+         * Get the value of listId
+         */ 
+        public function getListId()
+        {
+                return $this->listId;
+        }
+
+        /**
+         * Set the value of listId
+         *
+         * @return  self
+         */ 
+        public function setListId($listId)
+        {
+                $this->listId = $listId;
+
+                return $this;
+        }
 
         /**
          * Get the value of taskInfo
@@ -47,14 +68,29 @@
 
             try {
                 $conn = Db::getConnection();
-                $statement = $conn->prepare("insert into task (task_name) values (:task)");
+                $statement = $conn->prepare("insert into task (task_name, list_id) values (:task, :list_id)");
                 $statement->bindParam(":task", $task);
+                $statement->bindParam(":list_id", $this->listId);
                 $statement->execute();
                 
             } 
             
             catch (Throwable $t ) {
                 return false;
+            }
+        }
+
+        public static function getTaskByListId($listId) {
+            try {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare('select * from task where list_id = :list_id');
+                $statement->bindParam('list_id', $listId);
+                $statement->execute();
+
+                return $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        } catch ( Throwable $t ) {
+                return false;
+    
             }
         }
 

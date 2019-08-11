@@ -1,6 +1,6 @@
 <?php 
-    require_once("Db.php");
-    require_once("Security.php");
+    require_once("Db.class.php");
+    require_once("classes/Security.class.php");
     
     class User { 
         
@@ -58,6 +58,10 @@
                 $this->passwordConfirmation = $passwordConfirmation;
                 return $this;
         }
+
+          /**
+         * @return boolean - true if registration, false if unsuccessful.
+         */
         
         public function register() {
             $hash = Security::hash($this->password);
@@ -68,26 +72,90 @@
                 $statement->bindParam(":password", $hash);
                 $result = $statement->execute();
                 return $result;
-            } 
             
-            catch (Throwable $t) {
-                $error = $t->getMessage();
+                $getData = $conn->prepare('select * from user where email = :email');
+                $getData->bindParam(':email', $this->email);
+                $getData->execute();
+                $data = $getData->fetchAll();
+            
+                if(!empty($data)){
+                    return array($data[0]['id'], $data[0]['email']);
+                }else{
+                    return false;
+                }
+
+    
+            } catch ( Throwable $t ) {
+                return false;
+    
             }
         }
 
-        public static function canLogin($email, $password){
+        public function canLogin(){
             $conn = Db::getConnection();
             $statement = $conn->prepare("select * from user where email = :email");
-            $statement->bindParam(":email", $email); 
+            $statement->bindParam(":email", $this->email); 
             $statement->execute();
-            $user = $statement->fetch(PDO::FETCH_ASSOC);
+            $result = $statement->fetchAll();
             
-            if (password_verify($password, $user['password'])) {
+            if(!empty($result)){
+                if(password_verify($this->password, $result[0]['password'])){
+                    return array($result[0]['id'], $result[0]['email']);
+                }
+                return false;
+            }
+        }
+
+        public static function checkLogin()
+        {
+            if (isset($_SESSION)) {
+                // session_start();
+            }
+            if (!isset($_SESSION['user'])) {
+                header('Location: login.php');
+            }
+        }
+
+        public static function findByEmail($email){
+            $conn = Db::getConnection();
+            $statement = $conn->prepare("select * from user where email = :email limit 1");
+            $statement->bindValue(":email", $email);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            if(!empty($result)){
+                    return true;
+            }else{
+                    return false;
+            }
+            
+        }
+
+        public static function isAccountAvailable($email){
+            $e = self::findByEmail($email);
+            
+            if($e == false){
                 return true;
             } else {
                 return false;
             }
         }
+    
+        public static function getUserById($id){
+                $conn = Db::getConnection()();
+                $statement = $conn->prepare('select * from user where id = :id');
+                $statement->bindParam(':id', $id);
+                $statement->execute();
+                $result = $statement->fetch();
+                return $result;
+        }
+
+        
+    }
+
+
+
+
+        /* 
         
         public function doLogin($email) {
             $_SESSION['email'] = $email;
@@ -105,4 +173,4 @@
     }
 
 
-    }
+    }*/ 

@@ -1,24 +1,44 @@
 <?php 
-    require_once("bootstrap/bootstrap.php");
+    require_once("bootstrap.php");
+    include_once("classes/Security.class.php");
+
     if( !empty($_POST) ){
-        
+
+        $security = new Security();
         $email = $_POST['email'];
-        $password = $_POST['password'];
-        $passwordConfirm = $_POST['passwordConfirm'];
+        $security->password = $_POST['password'];
+        $security->passwordConfirmation = $_POST['passwordConfirm'];
         
-        try{
-            $user = new User();
-            $user->setEmail($email);
-            $user->setPassword($password);
-            $user->setPasswordConfirmation($passwordConfirm);
-            if($user->register()) {
-                $user->doLogin($email);
+        if( $security->passwordsAreSecure() ){
+
+        try{ 
+            $user = new User();     
+            $user->setEmail($_POST['email']);
+            $user->setPassword($_POST['password']);
+            $user->setPasswordConfirmation($_POST['passwordConfirm']);
+
+            if($user->isAccountAvailable($_POST['email'])){
+                $data = $user->register();
+                if($data != false) {
+                    $_SESSION['user'] = $data;
+                    header('location: index.php');
+                }else{
+                    $error = true;
+                }
             }
-        }
+            else {
+                $error = "Email already in use!";
+            }
         
-        catch( Exception $e){
-            $error = $e->getMessage();
-        }
+    }
+    catch(Exception $e) {
+        $error = $e->getMessage();
+    }
+}
+
+else {
+    $error = "Your passwords are not secure (min 8 characters) or do not match.";
+}
 }
 ?>
 <!DOCTYPE html>
@@ -38,13 +58,21 @@
     <form action="" method="post">
         <h2 class="formTitle">Signup</h2>
 
-        <?php if (isset($error)): ?>
-        <div class="formError">
-            <p>
-                <?php echo $error ?>
-            </p>
-        </div>
-        <?php endif; ?>
+         <?php if(isset($error)): ?>
+                        <div class="form__error">
+                            <p>
+                                <?php echo "Something went wrong!"; ?>
+                                
+                            </p>
+                        </div>
+                <?php endif; ?>
+                <?php if(isset($error)): ?>
+                        <div class="form__error">
+                            <p>
+                              <?php echo $error; ?>
+                            </p>
+                        </div>
+                <?php endif; ?>
 
         <div class="formInput">
             <div class="formField">

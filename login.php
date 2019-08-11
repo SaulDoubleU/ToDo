@@ -1,14 +1,23 @@
 <?php 
-    require_once("bootstrap/bootstrap.php");
-    if (!empty($_POST)) {
+    include_once("bootstrap.php");
+    // get user and password from POST
+    if(!empty($_POST)){
         $email = $_POST['email'];
         $password = $_POST['password'];
-        if(User::canLogin($email, $password)){
-            User::doLogin($email);
-        } else {
-            $error = true;
+    
+        $user = new User();
+        $user->setEmail($email);
+        $user->setPassword($password);
+        //check if can login 
+        $data = $user->CanLogin();
+        if($data != false){
+            $_SESSION['user'] = $data;
+            header('Location: index.php');
+        }
+        else {
+            $error = "Login failed";
+        }
     }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,12 +37,12 @@
     <form action="" method="post">
         <h2 class="formTitle">Login</h2>
 
-        <?php if (isset($error)): ?>
-        <div class="formError">
-            <p>
-                * Wrong email or password
-            </p>
-        </div>
+        <?php if( isset($error) ): ?>
+            <div class="form__error">
+                <p>
+                    Sorry, we can't log you in with that email and password. Can you try again?
+                </p>
+            </div>
         <?php endif; ?>
 
         <div class="formInput">

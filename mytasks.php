@@ -1,11 +1,11 @@
 <?php 
-    require_once("bootstrap/bootstrap.php");
+    require_once("bootstrap.php");
 
     if( !empty($_POST) ){
 
             $mytask = new Task();
             $mytask->setTask($_POST['task']);
-            
+
             // naam van de taak
             $task = $mytask->getTask();
         
@@ -13,6 +13,9 @@
             $mytask->addTask($task);
 
             $mytask = Task::getTaskInformation($task);
+            $mytask = Task::getTaskByListId($task);
+            $listId= $mytask['list_id'];
+            $mylist = Mylist::getListInformation($listId);
     }
 ?>
 <!DOCTYPE html>
@@ -48,9 +51,11 @@
 
             <ul id="listupdates">
 
-            <?php foreach ($mytask as $t): ?>
-              <?php echo "<li>". $t['task_name'] ."</li>";?>
-                <?php endforeach; ?>
+            <?php foreach ($task as $t): ?>
+               <?php echo $t['id'];?>
+                   <div><?php echo $t['task_name']; ?></div> 
+                </a>
+            <?php endforeach; ?>
                 
             </ul>
 
