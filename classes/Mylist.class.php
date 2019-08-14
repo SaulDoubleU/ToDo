@@ -3,15 +3,13 @@
     
     class Mylist { 
         
-        private $list;
-        private $listInfo;
+        private $listName;
         private $listId;
-
 
          /**
          * Get the value of listId
          */ 
-        public function getListId()
+        public function getlistId()
         {
                 return $this->listId;
         }
@@ -21,79 +19,68 @@
          *
          * @return  self
          */ 
-        public function setListId($listId)
+        public function setlistId($listId)
         {
                 $this->listId = $listId;
 
                 return $this;
         }
+
         /**
-         * Get the value of listInfo
+         * Get the value of listName
          */ 
-        public function getListInfo()
+        public function getListName()
         {
-                return $this->listInfo;
+                return $this->listName;
         }
         /**
-         * Set the value of listInfo
+         * Set the value of listName
          *
          * @return  self
          */ 
-        public function setListInfo($listInfo)
+        public function setListName($listName)
         {
-                $this->listInfo = $listInfo;
+                $this->listName = $listName;
                 return $this;
         }
 
-        /**
-         * Get the value of list
-         */ 
-        public function getList()
-        {
-                return $this->list;
-        }
-        /**
-         * Set the value of list
-         *
-         * @return  self
-         */ 
-        public function setList($list)
-        {
-                $this->list = $list;
-                return $this;
-        }
-    
         
-        public function addList($list) {
-
-            try {
+        public function addList() {
+                try {
                 $conn = Db::getConnection();
-                $statement = $conn->prepare("insert into list (list_name) values (:list)");
-                $statement->bindParam(":list", $list);
+                $statement = $conn->prepare("insert into list (list_name) values (:listName)");
+                $statement->bindParam(":listName", $this->listName);
                 $statement->execute();
-                
-            } 
-            
-            catch (Throwable $t ) {
+                return $statement;
+        } catch ( Throwable $t ) {
                 return false;
+    
             }
         }
 
-        public static function getListInformation() {
-
-            try {
-                $conn = Db::getConnection();
-                $statement = $conn->prepare("select * from list");
-                $statement->execute();
-                $result = $statement->fetchAll();
-
-                return $result;
-            } 
+        public static function getListById($listId) {
+                try {
+                    $conn = Db::getConnection();
+                    $statement = $conn->prepare('select * from list where id = :list_id');
+                    $statement->bindParam('list_id', $listId);
+                    $statement->execute();
+                    
+                    return $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            } catch ( Throwable $t ) {
+                    return false;
+        
+                }
+            }
+    
+            public static function deleteList($listId) {
+                    try {
+                        $conn = Db::getConnection();
+                        $statement = $conn->prepare('delete from list where id = :list_id');
+                        $statement->bindParam('list_id', $listId);
+                        $statement->execute();       
+                } catch ( Throwable $t ) {
+                        return false;
             
-            catch (Throwable $t ) {
-                echo $t;
-            }
+                    }
+                }
         }
-        
-        
-    }

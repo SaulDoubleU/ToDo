@@ -1,5 +1,12 @@
 <?php 
     require_once("bootstrap.php");
+    if (isset($_SESSION['email'])) {
+        //logged in user
+        //echo "user logged in!";
+    } else {
+        //no logged in user
+        header('Location: login.php');
+    }
 
     if( !empty($_POST) ){
 

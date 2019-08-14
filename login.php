@@ -11,7 +11,7 @@
         //check if can login 
         $data = $user->CanLogin();
         if($data != false){
-            $_SESSION['user'] = $data;
+            $_SESSION['email'] = $data;
             header('Location: index.php');
         }
         else {

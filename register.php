@@ -20,7 +20,7 @@
             if($user->isAccountAvailable($_POST['email'])){
                 $data = $user->register();
                 if($data != false) {
-                    $_SESSION['user'] = $data;
+                    $_SESSION['email'] = $data;
                     header('location: index.php');
                 }else{
                     $error = true;

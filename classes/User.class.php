@@ -106,12 +106,10 @@
             }
         }
 
-        public static function checkLogin()
-        {
-            if (isset($_SESSION)) {
-                // session_start();
+        public static function checkLogin(){
+            if(!isset($_SESSION)) { 
             }
-            if (!isset($_SESSION['user'])) {
+            if(!isset($_SESSION['email'])){
                 header('Location: login.php');
             }
         }
@@ -151,26 +149,3 @@
 
         
     }
-
-
-
-
-        /* 
-        
-        public function doLogin($email) {
-            $_SESSION['email'] = $email;
-            header("Location: index.php");   
-        }
-
-        
-        public static function getUserById($id){
-            $conn = Db::getInstance();
-            $statement = $conn->prepare('select * from user where id = :id');
-            $statement->bindParam(':id', $id);
-            $statement->execute();
-            $result = $statement->fetch();
-            return $result;
-    }
-
-
-    }*/ 
