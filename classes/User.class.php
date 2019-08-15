@@ -114,17 +114,14 @@
             }
         }
 
-        public static function findByEmail($email){
+        public static function getLoginId($email){
             $conn = Db::getConnection();
-            $statement = $conn->prepare("select * from user where email = :email limit 1");
-            $statement->bindValue(":email", $email);
+            $statement = $conn->prepare("select id from user where email = :email ");
+            $statement->bindParam(":email", $email);
             $statement->execute();
-            $result = $statement->fetch(PDO::FETCH_ASSOC);
-            if(!empty($result)){
-                    return true;
-            }else{
-                    return false;
-            }
+            $userId = $statement->fetch(PDO::FETCH_ASSOC);
+            $userId = $userId['id'];
+            return $userId;
             
         }
 
@@ -138,13 +135,15 @@
             }
         }
     
-        public static function getUserById($id){
-                $conn = Db::getConnection()();
-                $statement = $conn->prepare('select * from user where id = :id');
-                $statement->bindParam(':id', $id);
+        public static function getUserId(){
+                $userSession = $_SESSION['username'][1];
+                $conn = Db::getConnection();
+                $statement = $conn->prepare('select id from user where email = :userSession');
+                $statement->bindParam(':userSession', $userSession);
                 $statement->execute();
-                $result = $statement->fetch();
-                return $result;
+                $userId = $statement->fetch(PDO::FETCH_ASSOC);
+                $userId = $userId['id'];
+                return $userId;
         }
 
         

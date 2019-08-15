@@ -4,27 +4,9 @@
     class Mylist { 
         
         private $listName;
-        private $listId;
 
-         /**
-         * Get the value of listId
-         */ 
-        public function getlistId()
-        {
-                return $this->listId;
-        }
+        
 
-        /**
-         * Set the value of listId
-         *
-         * @return  self
-         */ 
-        public function setlistId($listId)
-        {
-                $this->listId = $listId;
-
-                return $this;
-        }
 
         /**
          * Get the value of listName
@@ -45,42 +27,30 @@
         }
 
         
-        public function addList() {
-                try {
+        public static function addList($listName, $userId) {
+
                 $conn = Db::getConnection();
-                $statement = $conn->prepare("insert into list (list_name) values (:listName)");
-                $statement->bindParam(":listName", $this->listName);
+                $statement = $conn->prepare("insert into list (list_name, user_id) values (:listName, :userId)");
+                $statement->bindParam(":listName", $listName);
+                $statement->bindParam(":userId", $userId);
                 $statement->execute();
                 return $statement;
-        } catch ( Throwable $t ) {
-                return false;
-    
-            }
-        }
-
-        public static function getListById($listId) {
-                try {
-                    $conn = Db::getConnection();
-                    $statement = $conn->prepare('select * from list where id = :list_id');
-                    $statement->bindParam('list_id', $listId);
-                    $statement->execute();
-                    
-                    return $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-            } catch ( Throwable $t ) {
-                    return false;
         
-                }
-            }
-    
-            public static function deleteList($listId) {
-                    try {
-                        $conn = Db::getConnection();
-                        $statement = $conn->prepare('delete from list where id = :list_id');
-                        $statement->bindParam('list_id', $listId);
-                        $statement->execute();       
-                } catch ( Throwable $t ) {
-                        return false;
-            
-                    }
-                }
         }
+    
+
+                public static function getListInfo($userId) {
+
+                            $conn = Db::getConnection();
+                            $statement = $conn->prepare("select * from list where user_id = :userId");
+                            $statement->bindParam(":userId", $userId);
+                            $statement->execute();
+                            $userlist = $statement->fetchAll();
+            
+                            return $userlist;
+                        } 
+                        
+        }
+        
+
+        

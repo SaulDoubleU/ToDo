@@ -1,26 +1,35 @@
 <?php 
     require_once("bootstrap.php");
-    if (isset($_SESSION['email'])) {
+    if (isset($_SESSION['username'])) {
         //logged in user
-        //echo "user logged in!";
     } else {
         //no logged in user
         header('Location: login.php');
     }
-
-    if( !empty($_POST) ){
-
-            $mylist = new Mylist();
-            $mylist->setList($_POST['list']);
-            
-            // naam van de lijst
-            $list = $mylist->getList();
         
-            // functie oproepen om in db te plaatsen
-            $mylist->addList($list);
 
-            $mylist = Mylist::getListInformation($list);
+    if (!empty($_POST['list'])) {
+
+        $userlist = new Mylist();
+        $userlist->setListName($_POST['list']);
+        $userId = User::getUserId();
+
+
+        $listName = $userlist->getListName();
+        $userlist->addList($listName, $userId);
+
+        //show data from list
+        $userlist = Mylist::getListInfo($userId);
     }
+    
+    else {
+        $error = "All fields must be filled in.";
+    }
+
+
+        
+    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,13 +59,13 @@
 
         </div>
 
-         <h2 class="formTitle">My List</h2>
+         <h2 class="listsTitle">My List</h2>
         <div>
 
             <ul id="listupdates">
 
-            <?php foreach ($mylist as $m): ?>
-               <a href="mytasks.php"><?php echo "<li>". $m['list_name'] ."</li>";?></a>
+            <?php foreach ($userlist as $u): ?>
+               <a href="mytasks.php"><?php echo "<li>". $u['list_name'] ."</li>"; ?></a>
                 <?php endforeach; ?>
                 
             </ul>

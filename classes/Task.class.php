@@ -3,112 +3,52 @@
     
     class Task { 
         
-        private $task;
-        private $taskInfo;
-        private $listId;
+        private $taskDesc;
 
         /**
-         * Get the value of listId
+         * Get the value of taskDesc
          */ 
-        public function getListId()
+        public function gettaskDesc()
         {
-                return $this->listId;
+                return $this->taskDesc;
         }
-
         /**
-         * Set the value of listId
+         * Set the value of taskDesc
          *
          * @return  self
          */ 
-        public function setListId($listId)
+        public function settaskDesc($taskDesc)
         {
-                $this->listId = $listId;
-
+                $this->taskDesc = $taskDesc;
                 return $this;
         }
 
-        /**
-         * Get the value of taskInfo
-         */ 
-        public function getTaskInfo()
-        {
-                return $this->taskInfo;
-        }
-        /**
-         * Set the value of taskInfo
-         *
-         * @return  self
-         */ 
-        public function setTaskInfo($taskInfo)
-        {
-                $this->taskInfo = $taskInfo;
-                return $this;
-        }
-
-        /**
-         * Get the value of task
-         */ 
-        public function getTask()
-        {
-                return $this->task;
-        }
-        /**
-         * Set the value of task
-         *
-         * @return  self
-         */ 
-        public function setTask($task)
-        {
-                $this->task = $task;
-                return $this;
-        }
-    
         
-        public function addTask($task) {
+        public static function addTask($taskDesc, $listId) {
 
-            try {
                 $conn = Db::getConnection();
-                $statement = $conn->prepare("insert into task (task_name, list_id) values (:task, :list_id)");
-                $statement->bindParam(":task", $task);
-                $statement->bindParam(":list_id", $this->listId);
+                $statement = $conn->prepare("insert into task (task_name, list_id) values (:taskDesc, :listId)");
+                $statement->bindParam(":taskDesc", $taskDesc);
+                $statement->bindParam(":listId", $listId);
                 $statement->execute();
-                
-            } 
-            
-            catch (Throwable $t ) {
-                return false;
-            }
+                return $statement;
+        
         }
 
-        public static function getTaskByListId($listId) {
-            try {
-                $conn = Db::getInstance();
-                $statement = $conn->prepare('select * from task where list_id = :list_id');
-                $statement->bindParam('list_id', $listId);
-                $statement->execute();
+                public static function getTaskInfo($listId) {
 
-                return $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        } catch ( Throwable $t ) {
-                return false;
-    
-            }
-        }
-
-        public static function getTaskInformation() {
-
-            try {
-                $conn = Db::getConnection();
-                $statement = $conn->prepare("select * from task");
-                $statement->execute();
-                $result = $statement->fetchAll();
-
-                return $result;
-            } 
+                            $conn = Db::getConnection();
+                            $statement = $conn->prepare("select * from task where list_id = :listId");
+                            $statement->bindParam(":listId", $listId);
+                            $statement->execute();
+                            $usertask = $statement->fetchAll();
             
-            catch (Throwable $t ) {
-                return false;
-            }
+                            return $usertask;
+                        } 
+                        
+
+            
         }
         
+
         
-    }

@@ -1,22 +1,37 @@
 <?php 
     require_once("bootstrap.php");
-
-    if( !empty($_POST) ){
-
-            $mytask = new Task();
-            $mytask->setTask($_POST['task']);
-
-            // naam van de taak
-            $task = $mytask->getTask();
-        
-            // functie oproepen om in db te plaatsen
-            $mytask->addTask($task);
-
-            $mytask = Task::getTaskInformation($task);
-            $mytask = Task::getTaskByListId($task);
-            $listId= $mytask['list_id'];
-            $mylist = Mylist::getListInformation($listId);
+    if (isset($_SESSION['username'])) {
+        //logged in user
+    } else {
+        //no logged in user
+        header('Location: login.php');
     }
+        
+
+    if (!empty($_POST['task'])) {
+
+        
+        $usertask = new Task();
+        $usertask->settaskDesc($_POST['task']);
+        $listId = Task::getListId();
+
+
+        $taskDesc = $userlist->gettaskDesc();
+        $usertask->addTask($taskDesc, $listId);
+
+        //show data from task
+        $usertask = Task::getTaskInfo($listId);
+
+    }
+    
+    else {
+        $error = "All fields must be filled in.";
+    }
+
+
+        
+    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,10 +40,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TodoApp - Add Task</title>
+    <title>TodoApp - Add List</title>
 
     <link rel="stylesheet" href="css/style.css">
-    
+    <?php include_once("includes/nav.inc.php"); ?>
 </head>
 
 <body>
@@ -38,31 +53,29 @@
 
         <div class="formInput">
             <div class="formField">
-                <label for="task">Task</label>
-                <input type="text" id="task" name="task" placeholder="task">
+                <label for="task">Task Title</label>
+                <input type="text" id="task" name="task" placeholder="task title">
             </div>
 
             <input type="submit" value="add task" class="btn">
 
         </div>
 
-         <h2 class="formTitle">Tasks</h2>
+         <h2 class="taskTitle">My Tasks</h2>
         <div>
 
-            <ul id="listupdates">
+            <ul id="taskupdates">
 
-            <?php foreach ($task as $t): ?>
-               <?php echo $t['id'];?>
-                   <div><?php echo $t['task_name']; ?></div> 
-                </a>
-            <?php endforeach; ?>
+            <?php foreach ($usertask as $t): ?>
+               <?php echo "<li>". $t['task_name'] ."</li>"; ?></a>
+                <?php endforeach; ?>
                 
             </ul>
 
         </div>
     </form>
 
-    <a href="index.php">back to lists!</a>
+
 </body>
 
 </html>
