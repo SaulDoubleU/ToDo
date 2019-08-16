@@ -125,6 +125,20 @@
             
         }
 
+        public static function findByEmail($email){
+            $conn = Db::getConnection();
+            $statement = $conn->prepare("select * from user where email = :email limit 1");
+            $statement->bindValue(":email", $email);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            if(!empty($result)){
+                    return true;
+            }else{
+                    return false;
+            }
+            
+        }
+
         public static function isAccountAvailable($email){
             $e = self::findByEmail($email);
             

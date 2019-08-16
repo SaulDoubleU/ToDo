@@ -1,4 +1,4 @@
-<?php 
+<?php
     require_once("Db.class.php");
     
     class Mylist { 
@@ -39,18 +39,36 @@
         }
     
 
-                public static function getListInfo($userId) {
+        public static function getListInfo($userId) {
 
-                            $conn = Db::getConnection();
-                            $statement = $conn->prepare("select * from list where user_id = :userId");
-                            $statement->bindParam(":userId", $userId);
-                            $statement->execute();
-                            $userlist = $statement->fetchAll();
+                $conn = Db::getConnection();
+                $statement = $conn->prepare("select * from list where user_id = :userId");
+                $statement->bindParam(":userId", $userId);
+                $statement->execute();
+                $userlist = $statement->fetchAll();
             
-                            return $userlist;
-                        } 
-                        
+                return $userlist;
+        } 
+
+        public static function getListId(){
+                $conn = Db::getConnection();
+                $statement = $conn->prepare('select id from list');
+                $statement->bindParam(':userSession', $userSession);
+                $statement->execute();
+                $userId = $statement->fetch(PDO::FETCH_ASSOC);
+                $userId = $userId['id'];
+                return $userId;
         }
+
+        public static function find($id) {
+                $conn = Db::getConnection();
+                $statement = $conn->prepare("select * from list where id = :id");
+                $statement->bindParam(":id", $id);
+                $statement->execute();
+                return $statement->fetch(PDO::FETCH_ASSOC);
+            }
+                        
+}
         
 
         

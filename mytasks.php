@@ -7,29 +7,29 @@
         header('Location: login.php');
     }
         
+    
+    $tasklist = $_GET['tasklist_id'];
+    $t = Mylist::find($tasklist);
 
     if (!empty($_POST['task'])) {
 
+        $task = new Task();
+        $task->settaskDesc($_POST['task']);
         
-        $usertask = new Task();
-        $usertask->settaskDesc($_POST['task']);
-        $listId = Task::getListId();
 
 
-        $taskDesc = $userlist->gettaskDesc();
-        $usertask->addTask($taskDesc, $listId);
-
-        //show data from task
-        $usertask = Task::getTaskInfo($listId);
+        $taskDesc = $task->gettaskDesc();
+        $task->addTask($taskDesc, $tasklist);
 
     }
     
     else {
-        $error = "All fields must be filled in.";
+        echo "You have to add a task first";
     }
 
 
-        
+    //show data from list
+    $task = Task::getTaskInfo($tasklist);
     
 
 ?>
@@ -66,7 +66,7 @@
 
             <ul id="taskupdates">
 
-            <?php foreach ($usertask as $t): ?>
+            <?php foreach ($task as $t): ?>
                <?php echo "<li>". $t['task_name'] ."</li>"; ?></a>
                 <?php endforeach; ?>
                 
@@ -74,7 +74,7 @@
 
         </div>
     </form>
-
+    <a href="index.php">back to lists!</a>
 
 </body>
 

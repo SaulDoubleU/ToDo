@@ -7,29 +7,30 @@
         header('Location: login.php');
     }
         
-
+        
+    $userId = User::getUserId();
+        
     if (!empty($_POST['list'])) {
 
-        $userlist = new Mylist();
-        $userlist->setListName($_POST['list']);
-        $userId = User::getUserId();
+        $tasklist = new Mylist();
+        $tasklist->setListName($_POST['list']);
+        
 
 
-        $listName = $userlist->getListName();
-        $userlist->addList($listName, $userId);
+        $listName = $tasklist->getListName();
+        $tasklist->addList($listName, $userId);
 
-        //show data from list
-        $userlist = Mylist::getListInfo($userId);
     }
     
     else {
-        $error = "All fields must be filled in.";
+        $error = "You have to add a list title first";
     }
 
 
-        
+    //show data from list
+    $tasklist = Mylist::getListInfo($userId);
     
-
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,8 +47,18 @@
 
 <body>
 
+    
     <form action="" method="post">
         <h2 class="formTitle">Add New List</h2>
+
+
+        <?php if(isset($error)): ?>
+            <div class="form__error">
+                <p>
+                    <?php echo $error; ?>
+                </p>
+            </div>
+        <?php endif; ?>
 
         <div class="formInput">
             <div class="formField">
@@ -59,13 +70,13 @@
 
         </div>
 
-         <h2 class="listsTitle">My List</h2>
+         <h2 class="listsTitle">My Lists</h2>
         <div>
 
             <ul id="listupdates">
 
-            <?php foreach ($userlist as $u): ?>
-               <a href="mytasks.php"><?php echo "<li>". $u['list_name'] ."</li>"; ?></a>
+            <?php foreach ($tasklist as $t): ?>
+               <a href="mytasks.php?tasklist_id=<?php echo $t['id']; ?>"><?php echo "<li>". $t['list_name'] ."</li>"; ?></a>
                 <?php endforeach; ?>
                 
             </ul>

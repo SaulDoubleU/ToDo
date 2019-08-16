@@ -23,32 +23,34 @@
                 return $this;
         }
 
-        
-        public static function addTask($taskDesc, $listId) {
+                public static function getTaskInfo($listId) {
 
                 $conn = Db::getConnection();
-                $statement = $conn->prepare("insert into task (task_name, list_id) values (:taskDesc, :listId)");
-                $statement->bindParam(":taskDesc", $taskDesc);
+                $statement = $conn->prepare("select * from task where list_id = :listId");
                 $statement->bindParam(":listId", $listId);
+                $statement->execute();
+                $usertask = $statement->fetchAll();
+            
+                return $usertask;
+        } 
+
+        
+        public static function addTask($taskDesc, $tasklist) {
+
+                $conn = Db::getConnection();
+                $statement = $conn->prepare("insert into task (task_name, list_id) values (:taskDesc, :tasklist)");
+                $statement->bindParam(":taskDesc", $taskDesc);
+                $statement->bindParam(":tasklist", $tasklist);
                 $statement->execute();
                 return $statement;
         
         }
 
-                public static function getTaskInfo($listId) {
-
-                            $conn = Db::getConnection();
-                            $statement = $conn->prepare("select * from task where list_id = :listId");
-                            $statement->bindParam(":listId", $listId);
-                            $statement->execute();
-                            $usertask = $statement->fetchAll();
-            
-                            return $usertask;
-                        } 
+        
                         
 
             
-        }
+}
         
 
         

@@ -1,4 +1,4 @@
-<?php 
+<?php
     require_once("bootstrap.php");
     include_once("classes/Security.class.php");
 
@@ -21,7 +21,7 @@
                 $data = $user->register();
                 if($data != false) {
                     $_SESSION['username'] = $data;
-                    header('location: index.php');
+                    header('location: login.php');
                 }else{
                     $error = true;
                 }
