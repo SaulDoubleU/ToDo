@@ -47,6 +47,13 @@
         }
 
         
+        public static function deleteListTasks($id) {
+                $conn = Db::getConnection();
+                $statement = $conn->prepare("delete from task where list_id = :id");
+                $statement->bindParam(":id", $id);
+                $statement->execute();
+                return $statement->fetch(PDO::FETCH_ASSOC);
+            }
                         
 
             

@@ -10,6 +10,8 @@
         
     $userId = User::getUserId();
         
+    if(isset($_POST['addbtn'])) {
+
     if (!empty($_POST['list'])) {
 
         $tasklist = new Mylist();
@@ -19,13 +21,12 @@
 
         $listName = $tasklist->getListName();
         $tasklist->addList($listName, $userId);
-
     }
     
     else {
         $error = "You have to add a list title first";
     }
-
+    }
 
     //show data from list
     $tasklist = Mylist::getListInfo($userId);
@@ -66,7 +67,7 @@
                 <input type="text" id="list" name="list" placeholder="list title">
             </div>
 
-            <input type="submit" value="add List" class="btn">
+            <input type="submit" value="add List" name="addbtn" class="btn">
 
         </div>
 
@@ -77,7 +78,8 @@
 
             <?php foreach ($tasklist as $t): ?>
                <a href="mytasks.php?tasklist_id=<?php echo $t['id']; ?>"><?php echo "<li>". $t['list_name'] ."</li>"; ?></a>
-                <?php endforeach; ?>
+               <a href="deletelist.php?tasklist_id=<?php echo $t['id']; ?>" >Delete List</a>
+            <?php endforeach; ?>
                 
             </ul>
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
     require_once("bootstrap.php");
     if (isset($_SESSION['username'])) {
         //logged in user
@@ -9,8 +9,9 @@
         
     
     $tasklist = $_GET['tasklist_id'];
-    $t = Mylist::find($tasklist);
+    $t = Mylist::findList($tasklist);
 
+    if(isset($_POST['addbtn'])) {
     if (!empty($_POST['task'])) {
 
         $task = new Task();
@@ -24,10 +25,10 @@
     }
     
     else {
-        echo "You have to add a task first";
+        $error = "You have to add a list title first";
     }
 
-
+    }
     //show data from list
     $task = Task::getTaskInfo($tasklist);
     
@@ -51,13 +52,21 @@
     <form action="" method="post">
         <h2 class="formTitle">Add New Task</h2>
 
+        <?php if(isset($error)): ?>
+            <div class="form__error">
+                <p>
+                    <?php echo $error; ?>
+                </p>
+            </div>
+        <?php endif; ?>
+
         <div class="formInput">
             <div class="formField">
                 <label for="task">Task Title</label>
                 <input type="text" id="task" name="task" placeholder="task title">
             </div>
 
-            <input type="submit" value="add task" class="btn">
+            <input type="submit" value="add task" name="addbtn" class="btn">
 
         </div>
 

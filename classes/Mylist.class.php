@@ -37,6 +37,16 @@
                 return $statement;
         
         }
+
+        public static function deleteList($id) {
+
+                $conn = Db::getConnection();
+                $statement = $conn->prepare("delete from list where id = :id");
+                $statement->bindParam(":id", $id);
+                $statement->execute();
+                return $statement;
+        
+        }
     
 
         public static function getListInfo($userId) {
@@ -50,17 +60,8 @@
                 return $userlist;
         } 
 
-        public static function getListId(){
-                $conn = Db::getConnection();
-                $statement = $conn->prepare('select id from list');
-                $statement->bindParam(':userSession', $userSession);
-                $statement->execute();
-                $userId = $statement->fetch(PDO::FETCH_ASSOC);
-                $userId = $userId['id'];
-                return $userId;
-        }
 
-        public static function find($id) {
+        public static function findList($id) {
                 $conn = Db::getConnection();
                 $statement = $conn->prepare("select * from list where id = :id");
                 $statement->bindParam(":id", $id);
