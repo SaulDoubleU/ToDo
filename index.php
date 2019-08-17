@@ -76,9 +76,9 @@
 
             <ul id="listupdates">
 
-            <?php foreach ($tasklist as $t): ?>
-               <a href="mytasks.php?tasklist_id=<?php echo $t['id']; ?>"><?php echo "<li>". $t['list_name'] ."</li>"; ?></a>
-               <a href="deletelist.php?tasklist_id=<?php echo $t['id']; ?>" >Delete List</a>
+            <?php foreach ($tasklist as $tl): ?>
+               <a href="mytasks.php?tasklist_id=<?php echo $tl['id']; ?>"><?php echo "<li>". $tl['list_name'] ."</li>"; ?></a>
+               <a href="deletelist.php?tasklist_id=<?php echo $tl['id']; ?>" >Delete List</a>
             <?php endforeach; ?>
                 
             </ul>

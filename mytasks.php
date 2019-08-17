@@ -9,29 +9,15 @@
         
     
     $tasklist = $_GET['tasklist_id'];
-    $t = Mylist::findList($tasklist);
+    $tlist = Mylist::findList($tasklist);
 
-    if(isset($_POST['addbtn'])) {
-    if (!empty($_POST['task'])) {
-
-        $task = new Task();
-        $task->settaskDesc($_POST['task']);
-        
-
-
-        $taskDesc = $task->gettaskDesc();
-        $task->addTask($taskDesc, $tasklist);
-
-    }
     
-    else {
-        $error = "You have to add a list title first";
-    }
+    
 
-    }
+    
     //show data from list
     $task = Task::getTaskInfo($tasklist);
-    
+    $taskdone = Task::getDoneTask($tasklist);
 
 ?>
 <!DOCTYPE html>
@@ -49,40 +35,44 @@
 
 <body>
 
-    <form action="" method="post">
-        <h2 class="formTitle">Add New Task</h2>
+<br><br><br>
 
-        <?php if(isset($error)): ?>
-            <div class="form__error">
-                <p>
-                    <?php echo $error; ?>
-                </p>
-            </div>
-        <?php endif; ?>
-
-        <div class="formInput">
-            <div class="formField">
-                <label for="task">Task Title</label>
-                <input type="text" id="task" name="task" placeholder="task title">
-            </div>
-
-            <input type="submit" value="add task" name="addbtn" class="btn">
-
-        </div>
-
+            <a href="newtask.php?tasklist_id=<?php echo $tlist['id']; ?>">Add new task!</a>
+            
+            
          <h2 class="taskTitle">My Tasks</h2>
+
+         <h3 class="taskTitle">Todo</h3>
+
         <div>
 
             <ul id="taskupdates">
 
             <?php foreach ($task as $t): ?>
-               <?php echo "<li>". $t['task_name'] ."</li>"; ?></a>
-                <?php endforeach; ?>
+               <li><a href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $t['id']; ?>"><?php echo $t['task_name']; ?> &nbsp <?php echo  $t['task_deadline']; ?></a></li>
+          
+               <a href="taskdone.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $t['id']; ?>" >Task Done</a>
+            <?php endforeach; ?>
                 
             </ul>
 
         </div>
-    </form>
+
+        <h3 class="taskTitle">Done</h3>
+
+        <div>
+
+            <ul id="taskupdates">
+
+            <?php foreach ($taskdone as $td): ?>
+               <li><a href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $td['id']; ?>"><?php echo $td['task_name']; ?> &nbsp <?php echo  $td['task_deadline']; ?></a></li>
+          
+            <?php endforeach; ?>
+                
+            </ul>
+
+        </div>
+        
     <a href="index.php">back to lists!</a>
 
 </body>
