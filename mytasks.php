@@ -30,6 +30,7 @@
     <title>TodoApp - Add List</title>
 
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <?php include_once("includes/nav.inc.php"); ?>
 </head>
 
@@ -49,9 +50,14 @@
             <ul id="taskupdates">
 
             <?php foreach ($task as $t): ?>
-               <li><a href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $t['id']; ?>"><?php echo $t['task_name']; ?> &nbsp <?php echo  $t['task_deadline']; ?></a></li>
+                <li><a href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $t['id']; ?>"><?php echo $t['task_name']; ?></a> &nbsp &nbsp &nbsp<?php echo  $t['task_deadline']; ?>
+                &nbsp &nbsp &nbsp
+                    <input type="checkbox" class="donetask" value="done" id="check">
+                    <label>Task Done</label>
+            
+                </li>
           
-               <a href="taskdone.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $t['id']; ?>" >Task Done</a>
+                
             <?php endforeach; ?>
                 
             </ul>
@@ -72,9 +78,33 @@
             </ul>
 
         </div>
-        
+        <h4 id="result"></h4>
     <a href="index.php">back to lists!</a>
 
+
+    <script>
+        $(document).ready(function() {
+            $('#check').click(function() {
+                var update = [];
+                $('.donetask').each(function() {
+                    if ($(this).is(":checked")) {
+                        update.push($(this).val());
+                    }
+                });
+                update = update.toString();
+                $.ajax({
+                    url: "taskdone.php",
+                    method: "POST",
+                    data: {
+                        update: update
+                    },
+                    success: function(data) {
+                        $('#result').html(data);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

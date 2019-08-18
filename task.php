@@ -22,13 +22,25 @@
         $taskDesc = $task->gettaskDesc();
         $taskDeadline = $task->gettaskDeadline();
     }
-    
-
-    
-    //show data from list
     $task = Task::getTaskInfo($tasklist);
-    
 
+    $taskId = $_GET['task_id'];
+
+    if(!empty($_POST))
+	{
+		try {
+			$comment = new Comment();
+			$comment->setComment($_POST['comment']);
+			$comment->Save($taskId);
+		} catch (\Throwable $th) {
+			//throw $th;
+		}
+    }
+    
+    $comments = Comment::getTaskComments($taskId);
+  
+    
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +59,7 @@
 
 <br><br><br>
 
-         <h2 class="taskTitle"><?php echo $findtask['task_name']; ?></h2>
+         <h2 data-id="<?php echo $taskId ?>" class="taskTitle"><?php echo $findtask['task_name']; ?></h2>
 
 
         <div>
@@ -60,9 +72,78 @@
 
         </div>
 
+        <div>
+
+            <ul id="taskupdates">
+
+               <li> file</li>
+                
+            </ul>
+
+        </div>
+
+        <div>
+        <h3>Comments</h3>
+
+            <div class="errors"></div>
+	
+	<form method="post" action="">
+		<div class="statusupdates">
+		
+        <input type="text" placeholder="Add comment" id="comment" name="comment" />
+		<input id="btnComment" type="submit" value="Add comment" />
+		
+		<ul id="listupdates">
+        <?php 
+			foreach($comments as $c) {
+					echo "<li>". $c['comment'] ."</li>";
+			}
+		?>
+        
+        
+		    </ul>
+		
+		</div>
+	</form>
+                
+
+        </div>
+
 
     <a href="mytasks.php?tasklist_id=<?php echo $tlist['id']; ?>">back to tasks!</a>
 
+
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script>
+	$("#btnComment").on("click", function(e){
+        
+        var comment = $("#comment").val();
+        var taskId = $(".taskTitle").attr("data-id");
+        console.log(taskId);
+		$.ajax({
+  			method: "POST",
+  			url: "ajax/comment.php",
+  			data: { comment: comment, taskId: taskId },
+			dataType: 'json'
+		})
+
+  		.done(function( res ) {
+              console.log(res);
+    		if( res.status == 'success' ) {
+				var li = "<li style='display:none;'>" + comment + "</li>";
+				$("#listupdates").append(li);
+				$("#comment").val("").focus();
+				$("#listupdates li").last().slideDown();
+			}
+  		});
+
+		e.preventDefault();
+	});
+  </script>
 </body>
 
 </html>
