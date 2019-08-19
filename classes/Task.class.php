@@ -5,6 +5,7 @@
         
         private $taskDesc;
         private $taskDeadline;
+        private $taskPressure;
 
         /**
          * Get the value of taskDesc
@@ -21,6 +22,25 @@
         public function settaskDesc($taskDesc)
         {
                 $this->taskDesc = $taskDesc;
+                return $this;
+        }
+
+        
+        /**
+         * Get the value of taskPressure
+         */ 
+        public function gettaskPressure()
+        {
+                return $this->taskPressure;
+        }
+        /**
+         * Set the value of taskPressure
+         *
+         * @return  self
+         */ 
+        public function settaskPressure($taskPressure)
+        {
+                $this->taskPressure = $taskPressure;
                 return $this;
         }
 
@@ -46,7 +66,7 @@
         public static function getTaskInfo($listId) {
 
                 $conn = Db::getConnection();
-                $statement = $conn->prepare("select * from task where list_id = :listId and task_done= 0");
+                $statement = $conn->prepare("select * from task where list_id = :listId and task_done= 0 ORDER BY task_deadline ASC");
                 $statement->bindParam(":listId", $listId);
                 $statement->execute();
                 $usertask = $statement->fetchAll();
@@ -55,12 +75,13 @@
         } 
 
         
-        public static function addTask($taskDesc, $taskDeadline, $tasklist) {
+        public static function addTask($taskDesc, $taskDeadline, $taskPressure, $tasklist) {
 
                 $conn = Db::getConnection();
-                $statement = $conn->prepare("insert into task (task_name, task_deadline, list_id) values (:taskDesc, :taskDeadline, :tasklist)");
+                $statement = $conn->prepare("insert into task (task_name, task_deadline, task_pressure, list_id) values (:taskDesc, :taskDeadline, :taskPressure, :tasklist)");
                 $statement->bindParam(":taskDesc", $taskDesc);
                 $statement->bindParam(":taskDeadline", $taskDeadline);
+                $statement->bindParam(":taskPressure", $taskPressure);
                 $statement->bindParam(":tasklist", $tasklist);
                 $statement->execute();
                 return $statement;
@@ -83,6 +104,14 @@
                 $statement->execute();
                 return $statement->fetch(PDO::FETCH_ASSOC);
             }
+
+        public static function findDeadline($taskid) {
+                $conn = Db::getConnection();
+                $statement = $conn->prepare("select task_deadline from task where id = :id");
+                $statement->bindParam(":id", $taskid);
+                $statement->execute();
+                return $statement->fetch(PDO::FETCH_ASSOC);
+            }
                         
         public static function doneTask($taskid) {
                 try {
@@ -100,7 +129,7 @@
             public static function getDoneTask($listId) {
 
                 $conn = Db::getConnection();
-                $statement = $conn->prepare("select * from task where list_id = :listId and task_done= 1");
+                $statement = $conn->prepare("select * from task where list_id = :listId and task_done= 1 ORDER BY task_deadline DESC");
                 $statement->bindParam(":listId", $listId);
                 $statement->execute();
                 $usertask = $statement->fetchAll();

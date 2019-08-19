@@ -13,15 +13,10 @@
     $task = $_GET['task_id'];
     $findtask = Task::findTask($task);
     $tlist = Mylist::findList($tasklist);
+    $deadline = Task::findDeadline($task);
+
     
-    if (!empty($_POST['task'])) {
 
-        $task = new Task();
-
-
-        $taskDesc = $task->gettaskDesc();
-        $taskDeadline = $task->gettaskDeadline();
-    }
     $task = Task::getTaskInfo($tasklist);
 
     $taskId = $_GET['task_id'];
@@ -61,13 +56,40 @@
 
          <h2 data-id="<?php echo $taskId ?>" class="taskTitle"><?php echo $findtask['task_name']; ?></h2>
 
+         <div>
+
+            <ul id="taskupdates">
+
+            <li> Work Hours <?php echo  date('G:i',strtotime($findtask['task_pressure'])); ?></li>
+            
+            </ul>
+
+        </div>
+
 
         <div>
 
             <ul id="taskupdates">
 
-               <li> <?php echo  $findtask['task_deadline']; ?></li>
-                
+            <li>
+               <?php
+                    $deadline = new DateTime($findtask['task_deadline']);
+                    $today = new DateTime(date('y-m-d'));
+                     
+                    $diff = $today->diff($deadline)->format("%r%a");
+                     
+
+                    if ($diff <0) {
+                        echo 'Deadline passed!';
+                       }
+                   else {
+                       echo $diff . 'days left'; 
+                   }
+                ?>
+
+                 </li>
+
+                <li> Deadline: <?php echo  $findtask['task_deadline'] ?></li>
             </ul>
 
         </div>

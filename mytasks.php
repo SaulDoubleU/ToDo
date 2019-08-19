@@ -30,7 +30,6 @@
     <title>TodoApp - Add List</title>
 
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <?php include_once("includes/nav.inc.php"); ?>
 </head>
 
@@ -50,10 +49,25 @@
             <ul id="taskupdates">
 
             <?php foreach ($task as $t): ?>
-                <li><a href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $t['id']; ?>"><?php echo $t['task_name']; ?></a> &nbsp &nbsp &nbsp<?php echo  $t['task_deadline']; ?>
+                <li ><a data-id="<?php echo $t ?>" id="todotask" href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $t['id']; ?>">
+                <?php echo $t['task_name']; ?></a> &nbsp &nbsp
+                
+                <?php $deadline = new DateTime($t['task_deadline']);
+                    $today = new DateTime(date('y-m-d'));
+                    $diff = $today->diff($deadline)->format("%r%a"); 
+
+                    if ($diff <0) {
+                         echo 'Deadline passed!';
+                        }
+                    else {
+                        echo $diff . 'days left'; 
+                    }
+                    
+                ?>
+
                 &nbsp &nbsp &nbsp
-                    <input type="checkbox" class="donetask" value="done" id="check">
-                    <label>Task Done</label>
+
+                <a href="taskdone.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $t['id']; ?>" >Task Done</a>
             
                 </li>
           
@@ -66,12 +80,24 @@
 
         <h3 class="taskTitle">Done</h3>
 
-        <div>
+        <div id="donetasks">
 
             <ul id="taskupdates">
 
             <?php foreach ($taskdone as $td): ?>
-               <li><a href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $td['id']; ?>"><?php echo $td['task_name']; ?> &nbsp <?php echo  $td['task_deadline']; ?></a></li>
+               <li><a href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $td['id']; ?>"><?php echo $td['task_name']; ?></a> &nbsp 
+               <?php $deadline = new DateTime($td['task_deadline']);
+                    $today = new DateTime(date('y-m-d'));
+                    $diff = $today->diff($deadline)->format("%r%a"); 
+
+                    if ($diff <0) {
+                         echo 'Deadline passed!';
+                        }
+                    else {
+                        echo $diff . 'days left'; 
+                    }
+                    
+                ?></li>
           
             <?php endforeach; ?>
                 
@@ -82,29 +108,38 @@
     <a href="index.php">back to lists!</a>
 
 
-    <script>
-        $(document).ready(function() {
-            $('#check').click(function() {
-                var update = [];
-                $('.donetask').each(function() {
-                    if ($(this).is(":checked")) {
-                        update.push($(this).val());
-                    }
-                });
-                update = update.toString();
-                $.ajax({
-                    url: "taskdone.php",
-                    method: "POST",
-                    data: {
-                        update: update
-                    },
-                    success: function(data) {
-                        $('#result').html(data);
-                    }
-                });
-            });
-        });
-    </script>
+   <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script>
+	$("#btnDone").on("click", function(e){
+        
+        var t = $("#todotask").attr("data-id");
+        
+
+        console.log(t);
+		$.ajax({
+  			method: "POST",
+  			url: "ajax/taskdone.php",
+  			data: { t: t },
+			dataType: 'json'
+		})
+
+  		.done(function( res ) {
+              console.log(res);
+    		if( res.status == 'success' ) {
+				var li = "<li style='display:none;'>" + task + "</li>";
+				$("#listupdates").append(li);
+				$("#comment").val("").focus();
+				$("#listupdates li").last().slideDown();
+			}
+  		});
+
+		e.preventDefault();
+	});
+  </script>
 </body>
 
 </html>

@@ -3,18 +3,16 @@
   
 
     if(!empty($_POST)) {
-        $comment = $_POST['comment'];
-        $taskId = $_POST['taskId'];
+        $task = $_POST['taskId'];
 
         try {
-            $c = new Comment();
-            $c->setComment($comment);
+            $c->getDoneTask($task);
             $c->save($taskId); 
             
             $result = [
                 "status" => "success",
-                "message" => "Comment was saved.",
-                "comment" => $comment
+                "message" => "Task marked as Done",
+                "task" => $task
             ];
         } catch(Throwable $t) {
             $result = [

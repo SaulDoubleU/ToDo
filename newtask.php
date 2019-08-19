@@ -17,11 +17,12 @@
         $task = new Task();
         $task->settaskDesc($_POST['tasktitle']);
         $task->settaskDeadline($_POST['deadline']);
-
+        $task->settaskPressure($_POST['work']);
 
         $taskDesc = $task->gettaskDesc();
         $taskDeadline = $task->gettaskDeadline();
-        $task->addTask($taskDesc, $taskDeadline, $tasklist);
+        $taskPressure = $task->gettaskPressure();
+        $task->addTask($taskDesc, $taskDeadline, $taskPressure, $tasklist);
 
     }
     
@@ -69,6 +70,11 @@
             <div class="formField">
                 <label for="task">Deadline</label>
                 <input type="date" id="task" name="deadline">
+            </div>
+
+            <div class="formField">
+                <label for="task">Work Hours</label>
+                <input type="time" id="task" name="work">
             </div>
 
             <div class="formField">
