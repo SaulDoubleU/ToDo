@@ -55,6 +55,7 @@ else {
 
 <body>
 
+<div class="container">
     <form action="" method="post">
         <h2 class="formTitle">Signup</h2>
 
@@ -75,31 +76,31 @@ else {
                 <?php endif; ?>
 
         <div class="formInput">
+        <label for="email">Email</label>
             <div class="formField">
-                <label for="email">Email</label>
                 <input type="text" id="email" name="email" placeholder="email">
             </div>
 
+            <label for="password">Password</label>
             <div class="formField">
-                <label for="password">Password</label>
                 <input type="password" name="password" id="password" placeholder="Password">
             </div>
 
+            <label for="passwordConfirm">Confirm Password</label>
             <div class="formField">
-                <label for="passwordConfirm">Confirm Password</label>
                 <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Password">
             </div>
 
-
+            <div class="formbtn">
             <input type="submit" value="Sign up" class="btn">
-
+            </div>
         </div>
 
         <div class="redirectLink">
-            <p>Already got an account? <a href="login.php"> Go back!</a></p>
+            <p>Already got an account?<br><br><a href="login.php">Go back!</a></p>
         </div>
     </form>
-
+    </div>
 
 </body>
 

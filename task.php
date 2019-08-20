@@ -51,27 +51,27 @@
 </head>
 
 <body>
-
-<br><br><br>
-
+<div class="container">
+        <div class="showtasktitle">
          <h2 data-id="<?php echo $taskId ?>" class="taskTitle"><?php echo $findtask['task_name']; ?></h2>
+         </div>
 
          <div>
 
-            <ul id="taskupdates">
+            <div class="showtaskinfo">
 
-            <li> Work Hours <?php echo  date('G:i',strtotime($findtask['task_pressure'])); ?></li>
+             Work Hours <?php echo  date('G:i',strtotime($findtask['task_pressure'])); ?></li>
             
-            </ul>
+            </div>
 
         </div>
 
 
         <div>
 
-            <ul id="taskupdates">
+            <div class="showtaskinfo">
 
-            <li>
+
                <?php
                     $deadline = new DateTime($findtask['task_deadline']);
                     $today = new DateTime(date('y-m-d'));
@@ -83,47 +83,49 @@
                         echo 'Deadline passed!';
                        }
                    else {
-                       echo $diff . 'days left'; 
+                       echo $diff . ' days left'; 
                    }
                 ?>
 
-                 </li>
-
-                <li> Deadline: <?php echo  $findtask['task_deadline'] ?></li>
-            </ul>
-
-        </div>
-
-        <div>
-
-            <ul id="taskupdates">
-
-               <li> file</li>
-                
-            </ul>
+            </div>  
+                <div class="showtaskinfo">
+                    Deadline: <?php echo  $findtask['task_deadline'] ?> 
+                </div> 
+                <div class="updatedeadline">
+                <a href="updatedeadline.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $findtask['id']; ?>">Change Deadline</a>
+                </div>
 
         </div>
 
+        <div class="showtaskinfo">
+            <br><br>    file
+        </div>
+
         <div>
-        <h3>Comments</h3>
 
             <div class="errors"></div>
 	
 	<form method="post" action="">
 		<div class="statusupdates">
-		
-        <input type="text" placeholder="Add comment" id="comment" name="comment" />
-		<input id="btnComment" type="submit" value="Add comment" />
-		
-		<ul id="listupdates">
-        <?php 
-			foreach($comments as $c) {
-					echo "<li>". $c['comment'] ."</li>";
-			}
-		?>
         
-        
-		    </ul>
+            <div class="postcomment">
+            
+                <div class="commenttext">
+                    <input  type="text" placeholder="Add comment" id="comment" name="comment" />
+                </div>
+                <div class="postcommentbtn">
+                    <input id="btnComment" type="submit" value="Post" />
+                </div>
+            </div>
+            <ul class="livecomments" id="listupdates">
+            <?php 
+                foreach($comments as $c) {
+                        echo "<li>". $c['comment'] ."</li>";
+                }
+            ?>
+            
+            
+                </ul>
 		
 		</div>
 	</form>
@@ -131,9 +133,9 @@
 
         </div>
 
-
-    <a href="mytasks.php?tasklist_id=<?php echo $tlist['id']; ?>">back to tasks!</a>
-
+    <div class="backlink">
+    <a href="mytasks.php?tasklist_id=<?php echo $tlist['id']; ?>"><img src="images/back.svg" width="30px;" alt=""></a>
+    </div>
 
     <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"

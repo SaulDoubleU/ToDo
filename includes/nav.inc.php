@@ -1,7 +1,6 @@
-<header>
-   <a href="index.php">Todo App</a>
+<nav class="navbar">
    <div class="menu">
-      <a href="./index.php">Home</a>
-      <a href="logout.php">Hi <?php echo $_SESSION['username'][1]; ?>, logout?</a>
+      <a class="navhome" href="./index.php">Home</a>
+      <a class="navlogout" href="logout.php">Hi <?php echo $_SESSION['username'][1]; ?>, logout?</a>
 </div> 
-</header>
+</nav>

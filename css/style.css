@@ -1,0 +1,400 @@
+
+
+/* 
+518167 green
+f7f1e4 white
+e7dfcf beige
+533f3b brown
+
+*/
+
+body {
+    background-color: #518167;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container{
+    position: absolute; 
+    left: 0; 
+    right: 0;
+    top: 100px;
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 400px;
+    background-color:#e7dfcf;
+    padding: 20px 0 20px 0;
+    border-radius: 10px;
+}
+.logo{
+    text-align: center;
+    padding: 40px;
+}
+.logo img{
+    width: 60%;
+    text-align: center;
+}
+
+.formTitle{
+    text-align: center;
+}
+
+.formField{
+    text-align: center
+}
+.formInput{
+    position: relative;
+    overflow: hidden;
+}
+
+input[type=text]{
+    width: 80%;
+    padding: 12px 20px;
+    margin: 8px 20px 20px 20px;
+    display: inline-block;
+    border: 1px solid #f7f1e4;
+    border-radius: 4px;
+    box-sizing: border-box;
+    
+}
+
+
+input[type=password]{
+    width: 80%;
+    padding: 12px 20px;
+    margin: 8px 20px 20px 20px;
+    display: inline-block;
+    border: 1px solid #f7f1e4;
+    border-radius: 4px;
+    box-sizing: border-box;
+    
+}
+
+
+input[type=submit]{
+    width: 80%;
+    padding: 10px 20px;
+    margin: 8px 20px 20px 20px;
+    display: inline-block;
+    border: 1px solid #f7f1e4;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #533f3b;
+    color: #eee7df;
+    font-weight: bold;
+    font-size: 1.1em;
+    
+}
+
+.deadlineandtime{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+input[type=date]{
+    width: 41%;
+    padding: 12px 20px;
+    margin: 8px 20px 20px 20px;
+    display: inline-block;
+    border: 1px solid #f7f1e4;
+    color: #757575;
+    border-radius: 4px;
+    box-sizing: border-box;
+    
+    
+}
+
+input[type=time]{
+    width: 28%;
+    padding: 12px 20px;
+    margin: 8px 20px 20px 20px;
+    display: inline-block;
+    border: 1px solid #f7f1e4;
+    color: #757575;
+    border-radius: 4px;
+    box-sizing: border-box;
+    
+}
+
+.workh{
+    padding-left: 110px;
+}
+
+.formbtn{
+    text-align: center;
+}
+
+label {
+    margin-left: 50px;
+    font-size: 0.7em;
+}
+
+.redirectLink{
+    text-align: center;
+    font-size: 0.7em;
+}
+
+.redirectLink a{
+    text-decoration: none;
+    color: #533f3b;
+    font-weight: bold;
+    font-size: 1.6em;
+}
+
+.form__error p{
+    color: #d13726;
+    font-size: 0.8em;
+    padding: 0 30px 10px 30px;
+}
+
+.form__errorindex p{
+    position: absolute; 
+    left: 0; 
+    right: 0;
+    top: 60px;
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 175px;
+    color: #d13726;
+    font-size: 0.8em;
+    padding: 0 30px 10px 30px;
+}
+
+
+.list {
+    position: absolute; 
+    left: 0; 
+    right: 0;
+    top: 350px;
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 400px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+#listupdates{
+    color: #533f3b;
+}
+
+ul {
+    padding: 0px;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.listitems{
+    margin: 15px 0 30px 0;
+    padding: 20px;
+    background-color: #e7dfcf;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+.listitem{
+    text-decoration: none;
+    color: #533f3b;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+#listupdates li{
+    list-style: none;
+    
+}
+
+
+.deletelist{
+    position: absolute;
+    left: 350px; 
+}
+
+.navbar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.5em;
+}
+
+.navbar a{
+  color: #f7f1e4;
+  font-size: 0.8em;
+  text-decoration: none;
+  display: inline-block;
+  padding: 20px;
+}
+
+.navhome{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.navlogout{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.container-tasks{
+    position: absolute; 
+    left: 0; 
+    right: 0;
+    top: 100px;
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 400px;
+    background-color:#e7dfcf;
+    padding: 40px 0 40px 0;
+    border-radius: 10px;
+}
+
+.addtaskbtn{
+    text-align: center;
+}
+
+.addtask{
+    padding: 12px 100px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #533f3b;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-align: center;
+    text-decoration: none;
+    color: #f7f1e4;
+}
+
+.taskheadTitle{
+    padding-top: 10px;
+    text-align: center;
+}
+
+.taskTitle {
+    padding-top: 10px;
+    font-size: 1em;
+    text-align: center;
+}
+
+.worktime{
+    display: none;
+}
+
+.backlink{
+    font-weight: bold;
+    text-align: center;
+    font-size: 0.8em;
+    position: absolute;
+    left: -60px;
+    top: 35px;
+}
+
+.backlink a{
+    text-decoration: none;
+    color: #f7f1e4;
+    
+}
+
+#taskupdates{
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+#taskupdates a{
+    text-decoration: none;
+    color: #111;
+    font-weight: bold;
+    
+}
+
+.deadline{
+    font-size: 0.8em;
+    color: #533f3b;
+}
+
+
+.taskinfo{
+    padding: 10px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    border-bottom: #533f3b solid 2px;
+
+}
+
+.taskdonebtn{
+    padding: 10px;
+    position: absolute;
+    left: 290px;
+    margin-top: -10px;
+}
+
+#taskdoneupdates{
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+#taskdoneupdates a{
+    text-decoration: none;
+    color: #111;
+    font-weight: bold;
+}
+
+.showtasktitle{
+    font-size: 1.4em;
+    margin-bottom: 40px;
+}
+
+.updatedeadline{
+    text-align: center;
+    margin-top: -40px;
+}
+
+.updatedeadline a{
+    text-decoration: none;
+    color: #533f3b;
+    font-size: 0.8em;
+    
+}
+
+.showtaskinfo{
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.postcomment{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.commenttext{
+    width: 70%;
+    margin-left: -20px
+}
+
+.postcommentbtn{
+    width: 30%;
+    margin-left: -40px;
+}
+
+.livecomments{
+    margin-left: 30px;
+    margin-bottom: 5px;
+}
+
+.livecomments li{
+    margin-bottom: 5px;
+}
+
+.updatedeadlinebtn{
+    text-align: center;
+}

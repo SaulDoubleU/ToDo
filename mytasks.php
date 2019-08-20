@@ -27,53 +27,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TodoApp - Add List</title>
+    <title>TodoApp - Tasks</title>
 
     <link rel="stylesheet" href="css/style.css">
     <?php include_once("includes/nav.inc.php"); ?>
 </head>
 
 <body>
+<h2 class="taskheadTitle">My Tasks</h2>
+<div class="container-tasks" >
 
-<br><br><br>
-
-            <a href="newtask.php?tasklist_id=<?php echo $tlist['id']; ?>">Add new task!</a>
+        <div class="addtaskbtn">
+            <a class="addtask" href="newtask.php?tasklist_id=<?php echo $tlist['id']; ?>">Add New Task!</a>
+        </div>
             
-            
-         <h2 class="taskTitle">My Tasks</h2>
+         
 
          <h3 class="taskTitle">Todo</h3>
 
         <div>
 
             <ul id="taskupdates">
-
-            <?php foreach ($task as $t): ?>
-                <li ><a data-id="<?php echo $t ?>" id="todotask" href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $t['id']; ?>">
-                <?php echo $t['task_name']; ?></a> &nbsp &nbsp
-                
-                <?php $deadline = new DateTime($t['task_deadline']);
-                    $today = new DateTime(date('y-m-d'));
-                    $diff = $today->diff($deadline)->format("%r%a"); 
-
-                    if ($diff <0) {
-                         echo 'Deadline passed!';
-                        }
-                    else {
-                        echo $diff . 'days left'; 
-                    }
-                    
-                ?>
-
-                &nbsp &nbsp &nbsp
-
-                <a href="taskdone.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $t['id']; ?>" >Task Done</a>
             
-                </li>
-          
+            <?php foreach ($task as $t): ?>
+            <li>
+            <div class="tasklist">
+            
+                <div class="taskinfo">
+                    <a data-id="<?php echo $t ?>" id="todotask" href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $t['id']; ?>">
+                        <?php echo $t['task_name']; ?></a>
+                    
+                        <div class="deadline">
+                            <?php $deadline = new DateTime($t['task_deadline']);
+                                $today = new DateTime(date('y-m-d'));
+                                $diff = $today->diff($deadline)->format("%r%a"); 
+
+                                if ($diff <0) {
+                                    echo 'Deadline passed!';
+                                    }
+                                else {
+                                    echo $diff . ' days left'; 
+                                }
+                                
+                            ?>
+                        </div>
+                        <div class="worktime" >
+                        <?php echo  date('G:i',strtotime($t['task_pressure'])); ?>    
+                        </div>
+                        <div class="taskdonebtn">
+                            <a id="btnDone" data-id="<?php echo $t['id']; ?>" href="#" >Task Done</a>
+                        </div>
+                </div>
+
                 
+            
+            </div> 
+            </li>
             <?php endforeach; ?>
-                
+            
             </ul>
 
         </div>
@@ -82,10 +93,16 @@
 
         <div id="donetasks">
 
-            <ul id="taskupdates">
+            <ul id="taskdoneupdates">
 
             <?php foreach ($taskdone as $td): ?>
-               <li><a href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $td['id']; ?>"><?php echo $td['task_name']; ?></a> &nbsp 
+            <li>
+            <div class="tasklist">
+            
+            <div class="taskinfo">
+               <a href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $td['id']; ?>"><?php echo $td['task_name']; ?></a>
+               
+               <div class="deadline">
                <?php $deadline = new DateTime($td['task_deadline']);
                     $today = new DateTime(date('y-m-d'));
                     $diff = $today->diff($deadline)->format("%r%a"); 
@@ -94,50 +111,63 @@
                          echo 'Deadline passed!';
                         }
                     else {
-                        echo $diff . 'days left'; 
+                        echo $diff . ' days left'; 
                     }
                     
-                ?></li>
-          
+                ?>
+                </div>
+                <div class="worktime" >
+                <?php echo  date('G:i',strtotime($td['task_pressure'])); ?>
+                </div>
+                </div>
+            </div> 
+            </li>
             <?php endforeach; ?>
                 
             </ul>
 
         </div>
         <h4 id="result"></h4>
-    <a href="index.php">back to lists!</a>
 
+    <div class="backlink">
+        <a href="index.php"><img src="images/back.svg" width="30px;" alt=""></a>
+    </div>
 
+    </div>
    <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
 
   <script>
-	$("#btnDone").on("click", function(e){
-        
-        var t = $("#todotask").attr("data-id");
-        
+	$("#taskupdates").on("click", function(e){
+        if(e.target.matches("#btnDone")){
+            var btndone = e.target;
+            var taskId = btndone.getAttribute("data-id");
+            var task = e.target.parentElement.firstChild.innerHTML;
 
-        console.log(t);
-		$.ajax({
+            $.ajax({
   			method: "POST",
   			url: "ajax/taskdone.php",
-  			data: { t: t },
+  			data: { taskId: taskId },
 			dataType: 'json'
 		})
 
   		.done(function( res ) {
-              console.log(res);
+              
     		if( res.status == 'success' ) {
-				var li = "<li style='display:none;'>" + task + "</li>";
-				$("#listupdates").append(li);
-				$("#comment").val("").focus();
-				$("#listupdates li").last().slideDown();
+                var li = e.target.parentElement;
+                var li = li.lastChild.remove();
+                e.target.parentElement.remove();
+				$("#taskdoneupdates").append(li);
+				$("#taskdoneupdates li").last().slideDown();
+                
 			}
-  		});
 
-		e.preventDefault();
+  		});
+          e.preventDefault();
+        }
+        
 	});
   </script>
 </body>

@@ -125,6 +125,18 @@
                 }
             }
 
+            public static function updateDeadline($taskId, $taskDeadline) {
+                try {
+                    $conn = Db::getConnection();
+                    $statement = $conn->prepare("update task set task_deadline = ':taskDeadline' where id = ':id'");
+                    $statement->bindParam('id', $taskId);
+                    $statement->bindParam(":taskDeadline", $taskDeadline);
+                    $statement->execute();       
+            } catch ( Throwable $t ) {
+                    return false;
+        
+                }
+            }
 
             public static function getDoneTask($listId) {
 

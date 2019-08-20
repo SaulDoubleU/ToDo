@@ -26,6 +26,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
     <title>TodoApp - login</title>
 
     <link rel="stylesheet" href="css/style.css">
@@ -34,8 +35,12 @@
 <body>
 
 
+
+<div class="container">
+
+    <div class="logo"><img src="images/logo.svg" alt=""></div>
+
     <form action="" method="post">
-        <h2 class="formTitle">Login</h2>
 
         <?php if( isset($error) ): ?>
             <div class="form__error">
@@ -46,27 +51,28 @@
         <?php endif; ?>
 
         <div class="formInput">
+        <label for="email">Email</label>
             <div class="formField">
-                <label for="email">Email</label>
                 <input type="text" id="email" name="email" placeholder="email">
             </div>
 
+            <label for="password">Password</label>
             <div class="formField">
-                <label for="password">Password</label>
                 <input type="password" name="password" id="password" placeholder="Password">
             </div>
 
-
-            <input type="submit" value="Login" class="btn">
+            <div class="formbtn">
+                <input type="submit" value="Login" class="btn">
+            </div>
 
         </div>
 
         <div class="redirectLink">
-            <p>Not a user yet? <a href="register.php"> Register Now!</a></p>
+            <p>Not a user yet?<br><br><a href="register.php">Register Now!</a></p>
         </div>
     </form>
 
-
+</div>
 </body>
 
 </html>

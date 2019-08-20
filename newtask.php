@@ -50,6 +50,7 @@
 
 <body>
 
+<div class="container">
     <form action="" method="post">
         <h2 class="formTitle">Add New Task</h2>
 
@@ -62,35 +63,37 @@
         <?php endif; ?>
 
         <div class="formInput">
+        <label for="task">Task Title</label>
             <div class="formField">
-                <label for="task">Task Title</label>
                 <input type="text" id="task" name="tasktitle" placeholder="task title">
             </div>
             
+            <div class="deadlineandtime" ></div>
+            <label for="task">Deadline</label>
+            <label class="workh" for="task">Work Hours</label>
             <div class="formField">
-                <label for="task">Deadline</label>
                 <input type="date" id="task" name="deadline">
-            </div>
-
-            <div class="formField">
-                <label for="task">Work Hours</label>
                 <input type="time" id="task" name="work">
             </div>
-
+            <br>
+            <label for="task">Add an extra file</label>
             <div class="formField">
-                <label for="task">extra file</label>
-                <input type="text" id="task" name="file" placeholder="file">
+                <input type="file" id="task" name="file" placeholder="file">
+                
             </div>
+       
 
         </div>
-        <br><br><br>
-        <input type="submit" value="add task" name="addbtn" class="btn" >
+        <br><br>
+       <div class="addtaskbtn">
+        <input type="submit" value="Add task" name="addbtn" class="btn" >
+        </div>
     </form>
 
-    
-    <a href="mytasks.php?tasklist_id=<?php echo $tl['id']; ?>">exit</a>
-    
-
+        <div class="backlink">
+        <a href="mytasks.php?tasklist_id=<?php echo $tl['id']; ?>"><img src="images/back.svg" width="30px;" alt=""></a>
+        </div>
+    </div>
 </body>
 
 </html>

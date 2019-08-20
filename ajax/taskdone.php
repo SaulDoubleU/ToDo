@@ -3,16 +3,16 @@
   
 
     if(!empty($_POST)) {
-        $task = $_POST['taskId'];
+        $taskId = $_POST['taskId'];
 
         try {
-            $c->getDoneTask($task);
-            $c->save($taskId); 
+            
+            Task::doneTask($taskId);
             
             $result = [
                 "status" => "success",
                 "message" => "Task marked as Done",
-                "task" => $task
+                "taskId" => $taskId
             ];
         } catch(Throwable $t) {
             $result = [

@@ -24,7 +24,7 @@
     }
     
     else {
-        $error = "You have to add a list title first";
+        $error = "*You have to add a list title first";
     }
     }
 
@@ -40,7 +40,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TodoApp - Add List</title>
+    <title>TodoApp - Lists</title>
 
     <link rel="stylesheet" href="css/style.css">
     <?php include_once("includes/nav.inc.php"); ?>
@@ -48,13 +48,13 @@
 
 <body>
 
-    
+    <div class="container">
     <form action="" method="post">
-        <h2 class="formTitle">Add New List</h2>
+        <h2 class="formTitle">My Lists</h2>
 
 
         <?php if(isset($error)): ?>
-            <div class="form__error">
+            <div class="form__errorindex">
                 <p>
                     <?php echo $error; ?>
                 </p>
@@ -63,29 +63,30 @@
 
         <div class="formInput">
             <div class="formField">
-                <label for="list">List Title</label>
-                <input type="text" id="list" name="list" placeholder="list title">
+                <input type="text" id="list" name="list" placeholder="List title">
             </div>
-
-            <input type="submit" value="add List" name="addbtn" class="btn">
-
+            <div class="formbtn">
+            <input type="submit" value="add New List" name="addbtn" class="btn">
+            </div>
         </div>
-
-         <h2 class="listsTitle">My Lists</h2>
-        <div>
+        </div>
+        
+        <div class="list">
 
             <ul id="listupdates">
-
+            
             <?php foreach ($tasklist as $tl): ?>
-               <a href="mytasks.php?tasklist_id=<?php echo $tl['id']; ?>"><?php echo "<li>". $tl['list_name'] ."</li>"; ?></a>
-               <a href="deletelist.php?tasklist_id=<?php echo $tl['id']; ?>" >Delete List</a>
+            <div class="listitems" >
+               <a class="listitem" href="mytasks.php?tasklist_id=<?php echo $tl['id']; ?>"><?php echo "<li>". $tl['list_name'] ."</li>"; ?></a>
+               <a class="deletelist" href="deletelist.php?tasklist_id=<?php echo $tl['id']; ?>" ><img src="images/cross.svg" width="15px" alt=""></a>
+            </div>
             <?php endforeach; ?>
-                
+            
             </ul>
 
         </div>
     </form>
-
+    
 
 </body>
 
