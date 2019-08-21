@@ -18,12 +18,18 @@ if (!empty($_POST['tasktitle']) && !empty($_POST['work'])) {
     $task->settaskDesc($_POST['tasktitle']);
     $task->settaskDeadline($_POST['deadline']);
     $task->settaskPressure($_POST['work']);
+    $task->settaskFile($_FILES['file']['name']);
 
     $taskDesc = $task->gettaskDesc();
     $taskDeadline = $task->gettaskDeadline();
     $taskPressure = $task->gettaskPressure();
-    $task->addTask($taskDesc, $taskDeadline, $taskPressure, $tasklist);
-    
+    $taskFile = $task->gettaskFile();
+    $task->addTask($taskDesc, $taskDeadline, $taskPressure, $taskFile, $tasklist);
+
+    $file = $_FILES['file']['name'];
+
+    move_uploaded_file($_FILES['file']['tmp_name'], "uploads/" . $file);
+
 
     header("Location: mytasks.php?tasklist_id=" .$tasklist);
 
@@ -52,7 +58,7 @@ else {
 <body>
 
 <div class="container"> 
-    <form method="post" >
+    <form form action="" method="POST" enctype="multipart/form-data">
         <h2 class="formTitle">Add New Task</h2>
 
         <?php if(isset($error)): ?>

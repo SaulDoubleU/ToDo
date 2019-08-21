@@ -6,10 +6,12 @@
         private $taskDesc;
         private $taskDeadline;
         private $taskPressure;
+        private $taskFile;
+
 
         /**
          * Get the value of taskDesc
-         */ 
+         */
         public function gettaskDesc()
         {
                 return $this->taskDesc;
@@ -22,6 +24,24 @@
         public function settaskDesc($taskDesc)
         {
                 $this->taskDesc = $taskDesc;
+                return $this;
+        }
+
+        /**
+         * Get the value of taskFile
+         */ 
+        public function gettaskFile()
+        {
+                return $this->taskFile;
+        }
+        /**
+         * Set the value of taskFile
+         *
+         * @return  self
+         */ 
+        public function settaskFile($taskFile)
+        {
+                $this->taskFile = $taskFile;
                 return $this;
         }
 
@@ -86,13 +106,14 @@
                 return $usertask;
         }
         
-        public static function addTask($taskDesc, $taskDeadline, $taskPressure, $tasklist) {
+        public static function addTask($taskDesc, $taskDeadline, $taskPressure, $taskFile, $tasklist) {
 
                 $conn = Db::getConnection();
-                $statement = $conn->prepare("insert into task (task_name, task_deadline, task_pressure, list_id) values (:taskDesc, :taskDeadline, :taskPressure, :tasklist)");
+                $statement = $conn->prepare("insert into task (task_name, task_deadline, task_pressure, task_file_name, list_id) values (:taskDesc, :taskDeadline, :taskPressure, :taskFile, :tasklist)");
                 $statement->bindParam(":taskDesc", $taskDesc);
                 $statement->bindParam(":taskDeadline", $taskDeadline);
                 $statement->bindParam(":taskPressure", $taskPressure);
+                $statement->bindParam(":taskFile", $taskFile);
                 $statement->bindParam(":tasklist", $tasklist);
                 $statement->execute();
                 return $statement;
@@ -155,6 +176,18 @@
                     $statement = $conn->prepare("update task set task_deadline = null where id = :id");
                     $statement->bindParam(":id", $taskid);
                     $statement->bindParam(":taskDeadline", $taskDeadline);
+                    $statement->execute();       
+            } catch ( Throwable $t ) {
+                    return false;
+        
+                }
+            }
+
+            public static function deleteFile($taskid) {
+                try {
+                    $conn = Db::getConnection();
+                    $statement = $conn->prepare("update task set task_file_name = null where id = :id");
+                    $statement->bindParam(":id", $taskid);
                     $statement->execute();       
             } catch ( Throwable $t ) {
                     return false;

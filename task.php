@@ -23,6 +23,8 @@
 
     if(!empty($_POST))
 	{
+
+        
 		try {
 			$comment = new Comment();
 			$comment->setComment($_POST['comment']);
@@ -31,9 +33,10 @@
 			//throw $th;
 		}
     }
-    
+
     $comments = Comment::getTaskComments($taskId);
-  
+   
+    
     
     
 ?>
@@ -72,20 +75,27 @@
             <div class="showtaskinfo">
 
 
-               <?php
-                    $deadline = new DateTime($findtask['task_deadline']);
-                    $today = new DateTime(date('y-m-d'));
-                     
-                    $diff = $today->diff($deadline)->format("%r%a");
-                     
+                            <?php $deadline = new DateTime($findtask['task_deadline']);
+                            $today = new DateTime(date('y-m-d'));
+                            $diff = $today->diff($deadline)->format("%r%a"); 
 
-                    if ($diff <0) {
-                        echo 'Deadline passed!';
-                       }
-                   else {
-                       echo $diff . ' days left'; 
-                   }
-                ?>
+                            if(!empty($findtask['task_deadline'])){
+                                
+
+                                if ($diff <0) {
+                                    echo 'Deadline passed!';
+                                    }
+                                else {
+                                    echo $diff . ' days left'; 
+                                }
+                                
+                            }
+                            
+                            else {
+                                echo ' No Deadline Set'; 
+                            }
+                            
+                        ?>
 
             </div>  
                 <div class="showtaskinfo">
@@ -101,7 +111,22 @@
         </div>
 
         <div class="showtaskinfo">
-            <br><br>    file
+            <br><br>
+            
+            <?php if(!empty($findtask['task_file_name'])): ?>
+            file
+                <a href="uploads/<?php echo $findtask['task_file_name']; ?>" download=<?php echo $findtask['task_file_name']; ?>>download</a><br>
+                <a href="deletefile.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $findtask['id']; ?>" ?>delete</a>
+                
+            
+            <?php endif; ?>
+            <?php if(empty($findtask['task_file_name'])): ?>
+           
+            <?php echo 'no file attached' ?>
+                
+                
+            <?php endif; ?>
+
         </div>
 
         <div>
