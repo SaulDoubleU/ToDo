@@ -63,16 +63,21 @@
                                 $diff = $today->diff($deadline)->format("%r%a"); 
 
                              
-                                    
+                                if(!empty($t['task_deadline'])){
+                                
 
-                                if ($diff <0) {
-                                    echo 'Deadline passed!';
+                                    if ($diff <0) {
+                                        echo 'Deadline passed!';
+                                        }
+                                    else {
+                                        echo $diff . ' days left'; 
                                     }
                                     
-                                else {
-                                    echo $diff . ' days left'; 
                                 }
-
+                                
+                                else {
+                                    echo ' No Deadline Set'; 
+                                }
                             
                                 
                                 
@@ -110,21 +115,27 @@
                <a href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $td['id']; ?>"><?php echo $td['task_name']; ?></a>
                
                <div class="deadline">
-               <?php $deadline = new DateTime($td['task_deadline']);
-                    $today = new DateTime(date('y-m-d'));
-                    $diff = $today->diff($deadline)->format("%r%a"); 
+                    <?php $deadline = new DateTime($td['task_deadline']);
+                            $today = new DateTime(date('y-m-d'));
+                            $diff = $today->diff($deadline)->format("%r%a"); 
 
-                    if ($diff <0) {
-                         echo 'Deadline passed!';
-                        }
-                    elseif(!empty($_POST['tasktitle'])){
-                         echo 'No Deadline set!';
-                    }
-                    else {
-                        echo $diff . ' days left'; 
-                    }
-                    
-                ?>
+                            if(!empty($td['task_deadline'])){
+                                
+
+                                if ($diff <0) {
+                                    echo 'Deadline passed!';
+                                    }
+                                else {
+                                    echo $diff . ' days left'; 
+                                }
+                                
+                            }
+                            
+                            else {
+                                echo ' No Deadline Set'; 
+                            }
+                            
+                        ?>
                 </div>
                 <div class="worktime" >
                 <?php echo  date('G:i',strtotime($td['task_pressure'])); ?>

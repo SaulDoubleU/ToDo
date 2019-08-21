@@ -6,33 +6,34 @@
         //no logged in user
         header('Location: login.php');
     }
+
+$_POST = array_filter($_POST);
+$tasklist = $_GET['tasklist_id'];
+$tl = Mylist::findList($tasklist);
         
+if(isset($_POST['addbtn'])) {
+if (!empty($_POST['tasktitle']) && !empty($_POST['work'])) {
+
+    $task = new Task();
+    $task->settaskDesc($_POST['tasktitle']);
+    $task->settaskDeadline($_POST['deadline']);
+    $task->settaskPressure($_POST['work']);
+
+    $taskDesc = $task->gettaskDesc();
+    $taskDeadline = $task->gettaskDeadline();
+    $taskPressure = $task->gettaskPressure();
+    $task->addTask($taskDesc, $taskDeadline, $taskPressure, $tasklist);
     
-    $tasklist = $_GET['tasklist_id'];
-    $tl = Mylist::findList($tasklist);
-
-    if(isset($_POST['addbtn'])) {
-    if (!empty($_POST['tasktitle'])) {
-
-        $task = new Task();
-        $task->settaskDesc($_POST['tasktitle']);
-        $task->settaskDeadline($_POST['deadline']);
-        $task->settaskPressure($_POST['work']);
-
-        $taskDesc = $task->gettaskDesc();
-        $taskDeadline = $task->gettaskDeadline();
-        $taskPressure = $task->gettaskPressure();
-        $task->addTask($taskDesc, $taskDeadline, $taskPressure, $tasklist);
-
-    }
-    
-    else {
-        $error = "You have to add a task title first";
-    }
 
     header("Location: mytasks.php?tasklist_id=" .$tasklist);
-    }
-    
+
+}
+
+else {
+    $error = "Task Title or Work Hours are empty!";
+}
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -50,8 +51,8 @@
 
 <body>
 
-<div class="container">
-    <form action="" method="post">
+<div class="container"> 
+    <form method="post" >
         <h2 class="formTitle">Add New Task</h2>
 
         <?php if(isset($error)): ?>

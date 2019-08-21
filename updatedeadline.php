@@ -14,22 +14,14 @@
     $tlist = Mylist::findList($tasklist);
     
 
-    if(isset($_POST['addbtn'])) {
-    if (!empty($_POST['deadline'])) {
+    if(isset($_POST)) {
+        if (!empty($_POST['deadline'])) {
 
-        $taskDeadline = new Task();
-        $taskDeadline->settaskDeadline($_POST['deadline']);
+            $taskDeadline =$_POST['deadline'];
+            Task::updateDeadline($task, $taskDeadline);
+            header("Location: mytasks.php?tasklist_id=" .$tlist['id']);
 
-        
-        $taskDeadline->updateDeadline($taskDeadline, $findtask);
-
-    }
-    
-    else {
-        $error = "You have to change the deadline first!";
-    }
-    Task::updateDeadline($taskDeadline, $findtask);
-    /*header("Location: task.php?tasklist_id=" .$tlist['id'] . "&task_id=" .$findtask['id']);*/
+        }
     }
 
 ?>
@@ -66,11 +58,16 @@
             </div>
 
         </div>
+
+
+
         <br>
         <div class="updatedeadlinebtn">
         <input type="submit" value="update deadline" name="addbtn" class="btn" >
         </div>
+       
     </form>
+
 
         <div class="backlink">
         <a href="mytasks.php?tasklist_id=<?php echo $tlist['id']; ?>"><img src="images/back.svg" width="30px;" alt=""></a>

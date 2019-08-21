@@ -94,6 +94,9 @@
                 <div class="updatedeadline">
                 <a href="updatedeadline.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $findtask['id']; ?>">Change Deadline</a>
                 </div>
+                <div class="deletedeadline">
+                <a href="deletedeadline.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $findtask['id']; ?>">Delete Deadline</a>
+                </div>
 
         </div>
 

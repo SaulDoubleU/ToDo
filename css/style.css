@@ -368,6 +368,17 @@ ul {
     
 }
 
+.deletedeadline{
+    text-align: center;
+}
+
+.deletedeadline a{
+    text-decoration: none;
+    color: #533f3b;
+    font-size: 0.8em;
+    
+}
+
 .showtaskinfo{
     text-align: center;
     padding-bottom: 40px;
