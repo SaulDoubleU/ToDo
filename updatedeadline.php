@@ -73,7 +73,7 @@
     </form>
 
         <div class="backlink">
-        <a href="task.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $findtask['id']; ?>"><img src="images/back.svg" width="30px;" alt=""></a>
+        <a href="mytasks.php?tasklist_id=<?php echo $tlist['id']; ?>"><img src="images/back.svg" width="30px;" alt=""></a>
         </div>
     </div>
 </body>

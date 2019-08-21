@@ -74,6 +74,17 @@
                 return $usertask;
         } 
 
+
+        public static function getTaskInfoHours($listId) {
+
+                $conn = Db::getConnection();
+                $statement = $conn->prepare("select * from task where list_id = :listId and task_done= 0 ORDER BY task_pressure ASC");
+                $statement->bindParam(":listId", $listId);
+                $statement->execute();
+                $usertask = $statement->fetchAll();
+            
+                return $usertask;
+        }
         
         public static function addTask($taskDesc, $taskDeadline, $taskPressure, $tasklist) {
 
@@ -142,6 +153,17 @@
 
                 $conn = Db::getConnection();
                 $statement = $conn->prepare("select * from task where list_id = :listId and task_done= 1 ORDER BY task_deadline DESC");
+                $statement->bindParam(":listId", $listId);
+                $statement->execute();
+                $usertask = $statement->fetchAll();
+            
+                return $usertask;
+        } 
+
+        public static function getDoneTaskHours($listId) {
+
+                $conn = Db::getConnection();
+                $statement = $conn->prepare("select * from task where list_id = :listId and task_done= 1 ORDER BY task_pressure DESC");
                 $statement->bindParam(":listId", $listId);
                 $statement->execute();
                 $usertask = $statement->fetchAll();

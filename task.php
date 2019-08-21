@@ -44,7 +44,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TodoApp - Add List</title>
+    <title>TodoApp - Task Info</title>
 
     <link rel="stylesheet" href="css/style.css">
     <?php include_once("includes/nav.inc.php"); ?>
@@ -134,7 +134,7 @@
         </div>
 
     <div class="backlink">
-    <a href="mytasks.php?tasklist_id=<?php echo $tlist['id']; ?>"><img src="images/back.svg" width="30px;" alt=""></a>
+    <a href="javascript:history.go(-1)"><img src="images/back.svg" width="30px;" alt=""></a>
     </div>
 
     <script

@@ -13,8 +13,8 @@
 
 
     //show data from list
-    $task = Task::getTaskInfo($tasklist);
-    $taskdone = Task::getDoneTask($tasklist);
+    $task = Task::getTaskInfoHours($tasklist);
+    $taskdone = Task::getDoneTaskHours($tasklist);
 
 ?>
 <!DOCTYPE html>
@@ -33,12 +33,10 @@
 <body>
 
 <div class="container-tasks" >
-
-        <h2 class="taskheadTitle">Tasklist</h2>
+<h2 class="taskheadTitle">Tasklist</h2>
         <div class="sortbtn">
-            <a href="mytasksbyhours.php?tasklist_id=<?php echo $tlist['id']; ?>" >Sort by Work Time</a>
+            <a href="mytasks.php?tasklist_id=<?php echo $tlist['id']; ?>">Sort by Deadline</a>
          </div>
-
         <div class="addtaskbtn">
             <a class="addtask" href="newtask.php?tasklist_id=<?php echo $tlist['id']; ?>">Add New Task!</a>
         </div>
