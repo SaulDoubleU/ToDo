@@ -252,6 +252,7 @@ ul {
     background-color:#e7dfcf;
     padding: 40px 0 40px 0;
     border-radius: 10px;
+    margin-bottom: 60px;
 }
 
 .addtaskbtn{
@@ -327,7 +328,7 @@ ul {
     flex-direction: column;
     justify-content: left;
     border-bottom: #533f3b solid 2px;
-
+    
 }
 
 .taskdonebtn{
@@ -341,6 +342,7 @@ ul {
     padding: 10px;
     position: relative;
     overflow: hidden;
+    margin-bottom: -60px;
 }
 
 #taskdoneupdates a{

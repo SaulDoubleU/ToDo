@@ -76,6 +76,7 @@
                 <input type="time" id="task" name="work">
             </div>
             <br>
+
             <label for="task">Add an extra file</label>
             <div class="formField">
                 <input type="file" id="task" name="file" placeholder="file">
@@ -94,6 +95,8 @@
         <a href="javascript:history.go(-1)"><img src="images/back.svg" width="30px;" alt=""></a>
         </div>
     </div>
+
+    
 </body>
 
 </html>

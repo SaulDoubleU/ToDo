@@ -130,7 +130,6 @@
 		</div>
 	</form>
                 
-
         </div>
 
     <div class="backlink">
@@ -147,7 +146,6 @@
         
         var comment = $("#comment").val();
         var taskId = $(".taskTitle").attr("data-id");
-        console.log(taskId);
 		$.ajax({
   			method: "POST",
   			url: "ajax/comment.php",
@@ -156,7 +154,6 @@
 		})
 
   		.done(function( res ) {
-              console.log(res);
     		if( res.status == 'success' ) {
 				var li = "<li style='display:none;'>" + comment + "</li>";
 				$("#listupdates").append(li);

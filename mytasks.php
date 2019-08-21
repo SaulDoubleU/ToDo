@@ -142,12 +142,11 @@
   crossorigin="anonymous"></script>
 
   <script>
-	$("#taskupdates").on("click", function(e){
+		$("#taskupdates").on("click", function(e){
         if(e.target.matches("#btnDone")){
             var btndone = e.target;
             var taskId = btndone.getAttribute("data-id");
-            var task = e.target.parentElement.firstChild.innerHTML;
-
+            
             $.ajax({
   			method: "POST",
   			url: "ajax/taskdone.php",
@@ -156,13 +155,12 @@
 		})
 
   		.done(function( res ) {
-              
+            console.log(res);
     		if( res.status == 'success' ) {
-                var li = e.target.parentElement;
-                var li = li.lastChild.remove();
-                e.target.parentElement.remove();
+                var li = e.target.parentElement.parentElement.parentElement.parentElement;
+                $(li).find(".taskdonebtn").remove();
 				$("#taskdoneupdates").append(li);
-				$("#taskdoneupdates li").last().slideDown();
+				$("#taskdoneupdate li").last().slideDown();
                 
 			}
 
