@@ -115,9 +115,10 @@
             
             <?php if(!empty($findtask['task_file_name'])): ?>
             file
-                <a href="uploads/<?php echo $findtask['task_file_name']; ?>" download=<?php echo $findtask['task_file_name']; ?>>download</a><br>
-                <a href="deletefile.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $findtask['id']; ?>" ?>delete</a>
-                
+                <a href="uploads/<?php echo $findtask['task_file_name']; ?>" download=<?php echo $findtask['task_file_name']; ?>>Download</a><br>
+                <div class="deletefile">
+                <a href="deletefile.php?tasklist_id=<?php echo $tlist['id']; ?>&task_id=<?php echo $findtask['id']; ?>" ?>Delete</a>
+                </div>
             
             <?php endif; ?>
             <?php if(empty($findtask['task_file_name'])): ?>

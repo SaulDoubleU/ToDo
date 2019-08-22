@@ -425,3 +425,14 @@ ul {
     color: #111;
     font-size: 0.7em;
 }
+
+.deletefile{
+    text-align: center;
+}
+
+
+.deletefile a{
+    text-decoration: none;
+    color: #533f3b;
+    font-size: 0.8em;
+}
